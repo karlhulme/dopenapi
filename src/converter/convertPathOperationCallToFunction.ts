@@ -63,14 +63,14 @@ function generateUrlClause(pathUrl: string, path: OpenApiSpecPath) {
       const colonIndex = pathUrlSegment.lastIndexOf(":");
       if (colonIndex === -1) {
         const paramName = pathUrlSegment.slice(1, pathUrlSegment.length - 1);
+        block += `url += "/" + props.${paramName};\n`;
+      } else {
+        const paramName = pathUrlSegment.slice(1, colonIndex);
         const verbName = pathUrlSegment.slice(
           colonIndex + 1,
           pathUrlSegment.length - 1,
         );
-        block += `url += "/" + props.${paramName} + ":" + ${verbName};\n`;
-      } else {
-        const paramName = pathUrlSegment.slice(1, colonIndex);
-        block += `url += "/" + props.${paramName};\n`;
+        block += `url += "/" + props.${paramName} + ":${verbName}";\n`;
       }
     } else {
       block += `url += "/${pathUrlSegment}";\n`;

@@ -63,10 +63,12 @@ function generateUrlClause(pathUrl: string, path: OpenApiSpecPath) {
     if (pathUrlSegment.startsWith("{")) {
       const colonIndex = pathUrlSegment.lastIndexOf(":");
       if (colonIndex === -1) {
+        // Path is regular /{id}
         const paramName = pathUrlSegment.slice(1, pathUrlSegment.length - 1);
         block += `url += "/" + props.${paramName};\n`;
       } else {
-        const paramName = pathUrlSegment.slice(1, colonIndex);
+        // Path contains custom verb /{id}:action
+        const paramName = pathUrlSegment.slice(1, colonIndex - 1);
         const verbName = pathUrlSegment.slice(
           colonIndex + 1,
           pathUrlSegment.length,

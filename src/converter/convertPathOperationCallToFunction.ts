@@ -60,8 +60,14 @@ function generateUrlClause(pathUrl: string, path: OpenApiSpecPath) {
 
   for (const pathUrlSegment of pathUrlSegments) {
     if (pathUrlSegment.startsWith("{")) {
-      const paramName = pathUrlSegment.slice(1, pathUrlSegment.length - 1);
-      block += `url += "/" + props.${paramName};\n`;
+      const colonIndex = pathUrlSegment.lastIndexOf(":");
+      if (colonIndex === -1) {
+        const paramName = pathUrlSegment.slice(1, pathUrlSegment.length - 1);
+        block += `url += "/" + props.${paramName};\n`;
+      } else {
+        const paramName = pathUrlSegment.slice(1, colonIndex);
+        block += `url += "/" + props.${paramName};\n`;
+      }
     } else {
       block += `url += "/${pathUrlSegment}";\n`;
     }
@@ -122,10 +128,10 @@ function generateValidationClause(op: OpenApiSpecPathOperation) {
   block += "const urlLine = `Url: ${url}`\n";
 
   if (typeof op.requestBody === "undefined") {
+    block += 'const bodyLine = "";\n';
+  } else {
     block +=
       "const bodyLine = `Body: ${JSON.stringify(props.body, null, 2)}`\n";
-  } else {
-    block += 'const bodyLine = "";\n';
   }
 
   block +=
@@ -158,7 +164,7 @@ function generateResponseClause(op: OpenApiSpecPathOperation) {
     block += `body: resultBody,\n`;
   }
 
-  if (Array.isArray(response.headers)) {
+  if (response.headers) {
     for (const headerName in response.headers) {
       block += `"${headerName}": response.headers["${headerName}"],\n`;
     }

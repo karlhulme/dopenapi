@@ -41,14 +41,14 @@ export function convertPathOperationCallToFunction(
   func.lines += generateUrlClause(pathUrl, path);
 
   func.lines += "try {\n";
-  func.lines += generateRequestClause(method, op);
-  func.lines += generateValidationClause(op);
-  func.lines += generateResponseClause(op);
+  func.lines += generateRequestClause(method, op) + "\n";
+  func.lines += generateValidationClause(op) + "\n";
+  func.lines += generateResponseClause(op) + "\n";
   func.lines += "} catch (err) {\n";
   func.lines += "const e = err as Error;\n";
   func.lines +=
     "throw new Error(`Service call failed to ${props.baseUrl}\n${e.name}: ${e.message}.`)\n";
-  func.lines += "}/n";
+  func.lines += "}\n";
 
   return func;
 }
@@ -80,23 +80,28 @@ function generateUrlClause(pathUrl: string, path: OpenApiSpecPath) {
     }
   }
 
-  block += `url += queryParams.length === 0 ? "" : "?" + queryParams.join("&")`;
+  block +=
+    `url += queryParams.length === 0 ? "" : "?" + queryParams.join("&");\n`;
 
   return block;
 }
 
 function generateRequestClause(method: string, op: OpenApiSpecPathOperation) {
-  let block = `const response = await fetch(\n`;
+  let block = `const headers: Record<string, string>`;
+
+  for (const param of op.parameters) {
+    if (param.in === "header") {
+      block += `if (typeof props["${param.name}"] !== "undefined") {\n`;
+      block += `header["${param.name}"] = props["${param.name}"].toString(),\n`;
+      block += "}\n";
+    }
+  }
+
+  block += `const response = await fetch(\n`;
   block += "url, {\n";
   block += "...options,\n";
   block += `method: "${method}",\n`;
-
-  block += "headers: {\n";
-  for (const param of op.parameters) {
-    if (param.in === "header") {
-      block += `"${param.name}": props["${param.name}"],\n`;
-    }
-  }
+  block += "headers,\n";
   block += "}\n";
 
   if (typeof op.requestBody !== "undefined") {
@@ -128,9 +133,11 @@ function generateValidationClause(op: OpenApiSpecPathOperation) {
   }
 
   block +=
-    "throw new Error(`${statusLine}\n${errorTextLine}\n${urlLine}\n${bodyLine}`)";
+    "throw new Error(`${statusLine}\n${errorTextLine}\n${urlLine}\n${bodyLine}`)\n";
 
-  block += "}\n";
+  block += "}\n"; // End of else recognised status block.
+
+  block += "}\n"; // End of if response.ok block.
 
   return block;
 }

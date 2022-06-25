@@ -11,7 +11,7 @@ export function convertPathOperationOutputsToInterface(
   _path: OpenApiSpecPath,
   op: OpenApiSpecPathOperation,
 ): TypescriptTreeInterface {
-  const propsParamName = `${capitalizeFirstLetter(op.operationId)}Props`;
+  const propsParamName = `${capitalizeFirstLetter(op.operationId)}Result`;
 
   const iface: TypescriptTreeInterface = {
     name: propsParamName,

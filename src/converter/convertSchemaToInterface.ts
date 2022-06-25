@@ -17,7 +17,7 @@ export function convertSchemaToInterface(
     members: [],
   };
 
-  if (Array.isArray(schema.properties)) {
+  if (schema.properties) {
     for (const propertyName in schema.properties) {
       const property = schema.properties[propertyName];
 

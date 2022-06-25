@@ -14,11 +14,11 @@ portion of JSON schema and OpenAPI schema.
 The `/components/requestBodies` will not be read. Place all schemas in the
 `/components/schemas` node instead.
 
-Each schema in `/components/schemas` must be an object type and should only
-contain one level of properties. Each property can be a JSON type (e.g. number,
-string, boolean) or a $ref to another schema. Alternatively, a property can be
+Parameter schemas, request bodies and response bodies must refer to a JSON type (e.g. number,
+string, boolean) or a $ref to another schema. Alternatively, you can define 
 an 'array' type with the items property set to a JSON type or a $ref to another
-schema. The possible options are shown below.
+schema. The possible options are shown below.  In many cases this will need to wrapped
+in a content > application/json > schema wrapper.
 
 ```json
 {
@@ -42,6 +42,10 @@ schema. The possible options are shown below.
   }
 }
 ```
+
+The `/component/schemas` node can only contain record definitions or enums.
+Record definitions may only define properties to a single level, however
+a property can reference any other schema type.
 
 Path parameters can only be placed in the parameters property of the path
 node, they cannot be placed in the operations such as get or post.  Conversely,

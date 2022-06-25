@@ -5,7 +5,7 @@ import {
 } from "../interfaces/index.ts";
 import { capitalizeFirstLetter } from "../utils/index.ts";
 import { convertPathSchemaToTypeName } from "./convertPathSchemaToTypeName.ts";
-import { isOperationUsingApiKey } from './isOperationUsingApiKey.ts'
+import { isOperationUsingApiKey } from "./isOperationUsingApiKey.ts";
 
 export function convertPathOperationInputsToInterface(
   path: OpenApiSpecPath,

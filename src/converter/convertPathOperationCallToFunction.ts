@@ -2,6 +2,7 @@ import { TypescriptTreeFunction } from "../../deps.ts";
 import {
   OpenApiSpecPath,
   OpenApiSpecPathOperation,
+  OpenApiSpecPathResponseHeader,
 } from "../interfaces/index.ts";
 import { capitalizeFirstLetter } from "../utils/index.ts";
 import { getOperationSuccessResponse } from "./getOperationSuccessResponse.ts";
@@ -68,7 +69,7 @@ function generateUrlClause(pathUrl: string, path: OpenApiSpecPath) {
         const paramName = pathUrlSegment.slice(1, colonIndex);
         const verbName = pathUrlSegment.slice(
           colonIndex + 1,
-          pathUrlSegment.length - 1,
+          pathUrlSegment.length,
         );
         block += `url += "/" + props.${paramName} + ":${verbName}";\n`;
       }
@@ -170,11 +171,41 @@ function generateResponseClause(op: OpenApiSpecPathOperation) {
 
   if (response.headers) {
     for (const headerName in response.headers) {
-      block += `"${headerName}": response.headers["${headerName}"],\n`;
+      const header = response.headers[headerName];
+      block += `"${headerName}": ${extractHeaderValue(headerName, header)},\n`;
     }
   }
 
   block += "}\n";
 
   return block;
+}
+
+function extractHeaderValue(
+  headerName: string,
+  header: OpenApiSpecPathResponseHeader,
+) {
+  if (header.schema.type === "boolean") {
+    if (header.required) {
+      return `response.headers.get("${headerName}") === "true"`;
+    } else {
+      return `response.headers.has("${headerName}") ? response.headers.get("${headerName}") === "true" : undefined`;
+    }
+  } else if (header.schema.type === "number") {
+    if (header.required) {
+      return `parseFloat(response.headers.get("${headerName}"))`;
+    } else {
+      return `response.headers.has("${headerName}") ? parseFloat(response.headers.get("${headerName}")) : undefined`;
+    }
+  } else if (header.schema.type === "string") {
+    if (header.required) {
+      return `response.headers.get("${headerName}") as string`;
+    } else {
+      return `response.headers.has("${headerName}") ? response.headers.get("${headerName}") as string : undefined`;
+    }
+  } else {
+    throw new Error(
+      `Unsupported header ${headerName}.\n${JSON.stringify(header)}`,
+    );
+  }
 }

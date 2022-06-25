@@ -45,7 +45,7 @@ export interface OpenApiSpecPathOperationParameter {
  */
 export interface OpenApiSpecPathOperationSchema {
   $ref?: string;
-  type?: "string" | "number" | "array";
+  type?: "string" | "number" | "boolean" | "array";
   title?: string;
   description?: string;
   items?: OpenApiSpecPathOperationSchemaItem;

@@ -21,12 +21,16 @@ export function convertSchemaToInterface(
     for (const propertyName in schema.properties) {
       const property = schema.properties[propertyName];
 
+      const isRequired = Array.isArray(schema.required) &&
+        schema.required.includes(propertyName);
+
       iface.members.push({
         name: propertyName,
         typeName: buildInterfacePropertyType(property),
         comment: buildComment(property.title, property.description),
         deprecated: property.deprecated,
-        optional: property.nullable,
+        optional: !isRequired,
+        nullable: property.nullable,
       });
     }
   }

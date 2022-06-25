@@ -4,7 +4,7 @@ import {
   OpenApiSpecPathOperation,
 } from "../interfaces/index.ts";
 import { capitalizeFirstLetter } from "../utils/index.ts";
-import { convertPathSchemaToTypeName } from "./convertPathSchemaToTypeName.ts";
+import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForOperationPathSchema.ts";
 import { getOperationSuccessResponse } from "./getOperationSuccessResponse.ts";
 
 export function convertPathOperationOutputsToInterface(
@@ -32,7 +32,7 @@ export function convertPathOperationOutputsToInterface(
 
     iface.members.push({
       name: "body",
-      typeName: convertPathSchemaToTypeName(responseSchema),
+      typeName: determineTypeNameForOperationPathSchema(responseSchema),
       comment: "The body of the response.",
     });
   }
@@ -43,7 +43,7 @@ export function convertPathOperationOutputsToInterface(
 
       iface.members.push({
         name: headerName,
-        typeName: convertPathSchemaToTypeName(header.schema),
+        typeName: determineTypeNameForOperationPathSchema(header.schema),
         comment: header.description,
         deprecated: header.deprecated,
         optional: !header.required,

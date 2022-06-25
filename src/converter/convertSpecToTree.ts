@@ -1,10 +1,10 @@
 import { newTypescriptTree, TypescriptTree } from "../../deps.ts";
 import { OpenApiSpec, OpenApiSpecPathOperation } from "../interfaces/index.ts";
-import { convertSchemaToInterface } from "./convertSchemaToInterface.ts";
-import { convertSchemaToEnumConstArray } from "./convertSchemaToEnumConstArray.ts";
+import { convertComponentObjectSchemaToInterface } from "./convertComponentObjectSchemaToInterface.ts";
+import { convertComponentStringSchemaToEnumConstArray } from "./convertComponentStringSchemaToEnumConstArray.ts";
 import { convertPathOperationInputsToInterface } from "./convertPathOperationInputsToInterface.ts";
 import { convertPathOperationOutputsToInterface } from "./convertPathOperationOutputsToInterface.ts";
-import { convertPathOperationCallToFunction } from "./convertPathOperationCallToFunction.ts";
+import { buildPathOperationFunction } from "./buildPathOperationFunction.ts";
 
 /**
  * Returns a string that contains Typescript declarations
@@ -37,10 +37,12 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
     const schema = spec.components.schemas[schemaName];
 
     if (schema.type === "object") {
-      tree.interfaces.push(convertSchemaToInterface(schemaName, schema));
+      tree.interfaces.push(
+        convertComponentObjectSchemaToInterface(schemaName, schema),
+      );
     } else if (schema.type === "string") {
       tree.enumConstArrays.push(
-        convertSchemaToEnumConstArray(schemaName, schema),
+        convertComponentStringSchemaToEnumConstArray(schemaName, schema),
       );
     }
   }
@@ -77,7 +79,7 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
       // Create functions for calling the operations that accept
       // typed inputs and return typed outpus.
       tree.functions.push(
-        convertPathOperationCallToFunction(
+        buildPathOperationFunction(
           pathUrl,
           path,
           methodOp.method,

@@ -4,9 +4,14 @@ import {
   OpenApiSpecPathOperation,
 } from "../interfaces/index.ts";
 import { capitalizeFirstLetter } from "../utils/index.ts";
-import { convertPathSchemaToTypeName } from "./convertPathSchemaToTypeName.ts";
+import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForOperationPathSchema.ts";
 import { isOperationUsingApiKey } from "./isOperationUsingApiKey.ts";
 
+/**
+ * Converts the given operation details into an interface.
+ * @param path An operation path.
+ * @param op An operation.
+ */
 export function convertPathOperationInputsToInterface(
   path: OpenApiSpecPath,
   op: OpenApiSpecPathOperation,
@@ -29,7 +34,7 @@ export function convertPathOperationInputsToInterface(
     if (pathParam.in === "path") {
       iface.members.push({
         name: pathParam.name,
-        typeName: convertPathSchemaToTypeName(pathParam.schema),
+        typeName: determineTypeNameForOperationPathSchema(pathParam.schema),
         comment: pathParam.description,
         deprecated: pathParam.deprecated,
         optional: false,
@@ -41,7 +46,7 @@ export function convertPathOperationInputsToInterface(
     if (param.in === "header" || param.in === "query") {
       iface.members.push({
         name: param.name,
-        typeName: convertPathSchemaToTypeName(param.schema),
+        typeName: determineTypeNameForOperationPathSchema(param.schema),
         comment: param.description,
         deprecated: param.deprecated,
         optional: !param.required,
@@ -61,7 +66,7 @@ export function convertPathOperationInputsToInterface(
   if (op.requestBody) {
     iface.members.push({
       name: "body",
-      typeName: convertPathSchemaToTypeName(
+      typeName: determineTypeNameForOperationPathSchema(
         op.requestBody.content["application/json"].schema,
       ),
       comment: "The body of the request.",

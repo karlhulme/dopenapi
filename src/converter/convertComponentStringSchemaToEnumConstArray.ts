@@ -2,7 +2,12 @@ import { TypescriptTreeEnumConstArray } from "../../deps.ts";
 import { OpenApiSpecSchema } from "../interfaces/index.ts";
 import { buildComment } from "./buildComment.ts";
 
-export function convertSchemaToEnumConstArray(
+/**
+ * Returns an enum const array.
+ * @param schemaName The name of a schema item.
+ * @param schema A JSON schema for an enumeration.
+ */
+export function convertComponentStringSchemaToEnumConstArray(
   schemaName: string,
   schema: OpenApiSpecSchema,
 ): TypescriptTreeEnumConstArray {

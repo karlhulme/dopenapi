@@ -1,1 +1,1 @@
-export * from './capitalizeFirstLetter.ts'
+export * from "./capitalizeFirstLetter.ts";

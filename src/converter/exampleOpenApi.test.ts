@@ -2547,4 +2547,4 @@ components:
     apiKeyAuth:
       type: apiKey
       in: header
-      name: x-api-key`
+      name: x-api-key`;

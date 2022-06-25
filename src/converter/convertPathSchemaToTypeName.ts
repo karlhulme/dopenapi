@@ -1,6 +1,8 @@
-import { OpenApiSpecPathOperationSchema } from '../interfaces/index.ts'
+import { OpenApiSpecPathOperationSchema } from "../interfaces/index.ts";
 
-export function convertPathSchemaToTypeName (parameterSchema: OpenApiSpecPathOperationSchema) {
+export function convertPathSchemaToTypeName(
+  parameterSchema: OpenApiSpecPathOperationSchema,
+) {
   if (
     parameterSchema.type === "array" && parameterSchema.items &&
     (parameterSchema.items.$ref || parameterSchema.items.type)

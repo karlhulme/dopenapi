@@ -11,7 +11,7 @@ export {
 
 export type {
   TypescriptTree,
+  TypescriptTreeEnumConstArray,
   TypescriptTreeFunction,
   TypescriptTreeInterface,
-  TypescriptTreeEnumConstArray
 } from "https://raw.githubusercontent.com/karlhulme/dtoasty/main/mod.ts";

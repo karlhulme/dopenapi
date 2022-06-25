@@ -44,16 +44,16 @@ export interface OpenApiSpecPathOperationParameter {
  * in the schemas section, or array versions of the same.
  */
 export interface OpenApiSpecPathOperationSchema {
-  $ref?: "string"
-  type?: "string" | "number" | "array"
+  $ref?: "string";
+  type?: "string" | "number" | "array";
   title?: string;
   description?: string;
-  items?: OpenApiSpecPathOperationSchemaItem
+  items?: OpenApiSpecPathOperationSchemaItem;
 }
 
 export interface OpenApiSpecPathOperationSchemaItem {
-  $ref?: "string"
-  type?: "string" | "number" | "boolean"
+  $ref?: "string";
+  type?: "string" | "number" | "boolean";
 }
 
 export interface OpenApiSpecPathOperation {
@@ -73,11 +73,11 @@ export interface OpenApiSpecPathOperationRequestBody {
 }
 
 export interface OpenApiSpecPathContent {
-  "application/json": OpenApiSpecPathContentMime
+  "application/json": OpenApiSpecPathContentMime;
 }
 
 export interface OpenApiSpecPathContentMime {
-  schema: OpenApiSpecPathOperationSchema
+  schema: OpenApiSpecPathOperationSchema;
 }
 
 export interface OpenApiSpecPathResponse {
@@ -103,7 +103,7 @@ export interface OpenApiSpecComponents {
  * an interface or an enum declaration.
  */
 export interface OpenApiSpecSchema {
-  type: "object"|"string";
+  type: "object" | "string";
   title?: string;
   enum?: string[];
   description?: string;

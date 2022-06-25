@@ -7,7 +7,7 @@ export function convertSchemaToEnumConstArray(
   schema: OpenApiSpecSchema,
 ): TypescriptTreeEnumConstArray {
   if (!Array.isArray(schema.enum)) {
-    throw new Error(`Cannot read enum const array.\n${JSON.stringify(schema)}`)
+    throw new Error(`Cannot read enum const array.\n${JSON.stringify(schema)}`);
   }
 
   return {

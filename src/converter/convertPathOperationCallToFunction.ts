@@ -7,6 +7,7 @@ import {
 import { capitalizeFirstLetter } from "../utils/index.ts";
 import { getOperationSuccessResponse } from "./getOperationSuccessResponse.ts";
 import { convertPathSchemaToTypeName } from "./convertPathSchemaToTypeName.ts";
+import { isOperationUsingApiKey } from './isOperationUsingApiKey.ts'
 
 export function convertPathOperationCallToFunction(
   pathUrl: string,
@@ -109,6 +110,10 @@ function generateRequestClause(method: string, op: OpenApiSpecPathOperation) {
         `headers["${param.name}"] = props["${param.name}"].toString();\n`;
       block += "}\n";
     }
+  }
+
+  if (isOperationUsingApiKey(op)) {
+    block += `headers["x-api-key"] = props["x-api-key"];\n`
   }
 
   block += `const response = await fetch(url, {\n`;

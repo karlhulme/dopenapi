@@ -5,6 +5,7 @@ import {
 } from "../interfaces/index.ts";
 import { capitalizeFirstLetter } from "../utils/index.ts";
 import { convertPathSchemaToTypeName } from "./convertPathSchemaToTypeName.ts";
+import { isOperationUsingApiKey } from './isOperationUsingApiKey.ts'
 
 export function convertPathOperationInputsToInterface(
   path: OpenApiSpecPath,
@@ -46,6 +47,15 @@ export function convertPathOperationInputsToInterface(
         optional: !param.required,
       });
     }
+  }
+
+  if (isOperationUsingApiKey(op)) {
+    iface.members.push({
+      name: "x-api-key",
+      typeName: "string",
+      comment: "The API key.",
+      optional: false,
+    });
   }
 
   if (op.requestBody) {

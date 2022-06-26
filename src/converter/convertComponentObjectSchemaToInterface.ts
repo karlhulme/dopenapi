@@ -3,6 +3,11 @@ import { OpenApiSpecSchema } from "../interfaces/index.ts";
 import { buildComment } from "./buildComment.ts";
 import { determineTypeNameForComponentSchemaProperty } from "./determineTypeNameForComponentSchemaProperty.ts";
 
+/**
+ * Returns an interface.
+ * @param schemaName The name of a schema element.
+ * @param schema A schema node.
+ */
 export function convertComponentObjectSchemaToInterface(
   schemaName: string,
   schema: OpenApiSpecSchema,

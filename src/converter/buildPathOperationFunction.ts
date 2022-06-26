@@ -49,7 +49,7 @@ export function buildPathOperationFunction(
   func.lines += "} catch (err) {\n";
   func.lines += "const e = err as Error;\n";
   func.lines +=
-    "throw new Error(`Service call failed to ${props.baseUrl}\n${e.name}: ${e.message}.`)\n";
+    "throw new Error(`Service call failed to ${url}\n${e.name}: ${e.message}.`)\n";
   func.lines += "}\n";
 
   return func;

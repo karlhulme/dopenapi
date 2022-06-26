@@ -1,9 +1,8 @@
-import {
-  OpenApiSpecPathOperation,
-  OpenApiSpecPathOperationResponseHeader,
-} from "../interfaces/index.ts";
+import { OpenApiSpecPathOperation } from "../interfaces/index.ts";
+import { capitalizeFirstLetter } from "../utils/index.ts";
 import { getOperationSuccessResponse } from "./getOperationSuccessResponse.ts";
 import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForOperationPathSchema.ts";
+import { buildPathOperationFunctionResponseHeaderParser } from "./buildPathOperationFunctionResponseHeaderParser.ts";
 
 export function buildPathOperationFunctionResponseLines(
   op: OpenApiSpecPathOperation,
@@ -19,7 +18,9 @@ export function buildPathOperationFunctionResponseLines(
     block += `const resultBody = await response.json() as ${resultType};\n`;
   }
 
-  block += "return {\n";
+  block += `const result: Partial<${
+    capitalizeFirstLetter(op.operationId)
+  }Result> {\n`;
 
   block += `status: response.status,\n`;
 
@@ -27,43 +28,19 @@ export function buildPathOperationFunctionResponseLines(
     block += `body: resultBody,\n`;
   }
 
+  block += "}\n";
+
   if (response.headers) {
     for (const headerName in response.headers) {
       const header = response.headers[headerName];
-      block += `"${headerName}": ${extractHeaderValue(headerName, header)},\n`;
+      block += buildPathOperationFunctionResponseHeaderParser(
+        headerName,
+        header,
+      ) + "\n";
     }
   }
 
-  block += "}\n";
+  block += "return result;\n";
 
   return block;
-}
-
-function extractHeaderValue(
-  headerName: string,
-  header: OpenApiSpecPathOperationResponseHeader,
-) {
-  if (header.schema.type === "boolean") {
-    if (header.required) {
-      return `response.headers.get("${headerName}") === "true"`;
-    } else {
-      return `response.headers.has("${headerName}") ? response.headers.get("${headerName}") === "true" : undefined`;
-    }
-  } else if (header.schema.type === "number") {
-    if (header.required) {
-      return `parseFloat(response.headers.get("${headerName}"))`;
-    } else {
-      return `response.headers.has("${headerName}") ? parseFloat(response.headers.get("${headerName}")) : undefined`;
-    }
-  } else if (header.schema.type === "string") {
-    if (header.required) {
-      return `response.headers.get("${headerName}") as string`;
-    } else {
-      return `response.headers.has("${headerName}") ? response.headers.get("${headerName}") as string : undefined`;
-    }
-  } else {
-    throw new Error(
-      `Unsupported header ${headerName}.\n${JSON.stringify(header)}`,
-    );
-  }
 }

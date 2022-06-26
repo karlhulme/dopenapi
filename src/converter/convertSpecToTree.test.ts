@@ -50,8 +50,8 @@ Deno.test("Convert an openapi specification object to a typescript tree.", () =>
         },
         SomeEnum: {
           type: "string",
-          enum: ["foo", "bar"]
-        }
+          enum: ["foo", "bar"],
+        },
       },
       securitySchemes: {},
     },

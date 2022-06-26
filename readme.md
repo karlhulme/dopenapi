@@ -5,7 +5,6 @@ A utility for reading an OpenAPI specification and generating a deno client.
 This library also contains a type heirarchy for a portion of the OpenAPI spec
 which can be used to generate valid OpenAPI specifications.
 
-
 ## Limitations
 
 This library supports a subset of OpenAPI. For example, it assumes all payloads
@@ -54,7 +53,6 @@ Path parameters can only be placed in the parameters property of the path node,
 they cannot be placed in the operations such as get or post. Conversely, header
 parameters, query parameters and cookie parameters can only be placed in the
 operations.
-
 
 ## Commands
 

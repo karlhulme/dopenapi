@@ -1,6 +1,6 @@
 import {
   OpenApiSpecPathOperation,
-  OpenApiSpecPathResponse,
+  OpenApiSpecPathOperationResponse,
 } from "../interfaces/index.ts";
 
 /**
@@ -14,7 +14,7 @@ export const successCodes = ["2XX", "200", "201", "202", "203", "204"];
  * @param op An OpenAPI operation.
  */
 export function getOperationSuccessResponse(op: OpenApiSpecPathOperation) {
-  let response: OpenApiSpecPathResponse | null = null;
+  let response: OpenApiSpecPathOperationResponse | null = null;
 
   for (const possSuccessCode of successCodes) {
     if (op.responses[possSuccessCode]) {

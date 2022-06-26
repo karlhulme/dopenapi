@@ -1,6 +1,6 @@
 import {
   OpenApiSpecPathOperation,
-  OpenApiSpecPathResponseHeader,
+  OpenApiSpecPathOperationResponseHeader,
 } from "../interfaces/index.ts";
 import { getOperationSuccessResponse } from "./getOperationSuccessResponse.ts";
 import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForOperationPathSchema.ts";
@@ -41,7 +41,7 @@ export function buildPathOperationFunctionResponseLines(
 
 function extractHeaderValue(
   headerName: string,
-  header: OpenApiSpecPathResponseHeader,
+  header: OpenApiSpecPathOperationResponseHeader,
 ) {
   if (header.schema.type === "boolean") {
     if (header.required) {

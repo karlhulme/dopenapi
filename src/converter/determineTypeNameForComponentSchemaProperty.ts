@@ -1,7 +1,7 @@
-import { OpenApiSpecSchemaProperty } from "../interfaces/index.ts";
+import { OpenApiSpecComponentSchemaProperty } from "../interfaces/index.ts";
 
 export function determineTypeNameForComponentSchemaProperty(
-  property: OpenApiSpecSchemaProperty,
+  property: OpenApiSpecComponentSchemaProperty,
 ) {
   if (
     property.type === "array" && property.items &&

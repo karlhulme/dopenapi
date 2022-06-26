@@ -1,5 +1,10 @@
 import { OpenApiSpecPathOperation } from "../interfaces/index.ts";
 
+/**
+ * Returns a block of code for checking the response to a fetch call
+ * and raising either a regular Error or a ServiceCallTransitoryError.
+ * @param op An operation.
+ */
 export function buildPathOperationFunctionValidationLines(
   op: OpenApiSpecPathOperation,
 ) {

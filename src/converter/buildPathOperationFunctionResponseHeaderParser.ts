@@ -23,7 +23,7 @@ export function buildPathOperationFunctionResponseHeaderParser(
   } else {
     let block = `if (response.headers.has("${headerName}")) {\n`;
     block += `result["${headerName}"] = ${extracter};\n`;
-    block += "};";
+    block += "}";
     return block;
   }
 }

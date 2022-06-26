@@ -34,7 +34,7 @@ Deno.test("Build a response header parser for an optional number.", () => {
     block,
     `if (response.headers.has("test-header")) {\n` +
       `result["test-header"] = parseFloat(response.headers.get("test-header"));\n` +
-      "};",
+      "}",
   );
 });
 

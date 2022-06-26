@@ -4,6 +4,11 @@ import { getOperationSuccessResponse } from "./getOperationSuccessResponse.ts";
 import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForOperationPathSchema.ts";
 import { buildPathOperationFunctionResponseHeaderParser } from "./buildPathOperationFunctionResponseHeaderParser.ts";
 
+/**
+ * Returns a set of Typescript code for building and
+ * returning the response from a service call.
+ * @param op An operation.
+ */
 export function buildPathOperationFunctionResponseLines(
   op: OpenApiSpecPathOperation,
 ) {
@@ -20,7 +25,7 @@ export function buildPathOperationFunctionResponseLines(
 
   block += `const result: Partial<${
     capitalizeFirstLetter(op.operationId)
-  }Result> {\n`;
+  }Result> = {\n`;
 
   block += `status: response.status,\n`;
 
@@ -28,7 +33,7 @@ export function buildPathOperationFunctionResponseLines(
     block += `body: resultBody,\n`;
   }
 
-  block += "}\n";
+  block += "};\n";
 
   if (response.headers) {
     for (const headerName in response.headers) {

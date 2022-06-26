@@ -21,7 +21,7 @@ export function convertPathOperationInputsToInterface(
   const iface: TypescriptTreeInterface = {
     name: propsParamName,
     exported: true,
-    deprecated: op.deprecated,
+    deprecated: Boolean(op.deprecated),
     comment: op.summary,
     members: [{
       name: "baseUrl",
@@ -36,7 +36,7 @@ export function convertPathOperationInputsToInterface(
         name: pathParam.name,
         typeName: determineTypeNameForOperationPathSchema(pathParam.schema),
         comment: pathParam.description,
-        deprecated: pathParam.deprecated,
+        deprecated: Boolean(pathParam.deprecated),
         optional: false,
       });
     }
@@ -48,7 +48,7 @@ export function convertPathOperationInputsToInterface(
         name: param.name,
         typeName: determineTypeNameForOperationPathSchema(param.schema),
         comment: param.description,
-        deprecated: param.deprecated,
+        deprecated: Boolean(param.deprecated),
         optional: !param.required,
       });
     }

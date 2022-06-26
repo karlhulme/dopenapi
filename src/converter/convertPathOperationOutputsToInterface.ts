@@ -16,7 +16,7 @@ export function convertPathOperationOutputsToInterface(
   const iface: TypescriptTreeInterface = {
     name: propsParamName,
     exported: true,
-    deprecated: op.deprecated,
+    deprecated: Boolean(op.deprecated),
     comment: op.summary,
     members: [{
       name: "status",
@@ -45,7 +45,7 @@ export function convertPathOperationOutputsToInterface(
         name: headerName,
         typeName: determineTypeNameForOperationPathSchema(header.schema),
         comment: header.description,
-        deprecated: header.deprecated,
+        deprecated: Boolean(header.deprecated),
         optional: !header.required,
       });
     }

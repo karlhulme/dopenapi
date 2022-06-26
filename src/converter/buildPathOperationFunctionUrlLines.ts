@@ -1,16 +1,24 @@
 import { OpenApiSpecPath } from "../interfaces/index.ts";
 
+/**
+ * Returns a set of Typescript code for building a url
+ * based on the operation inputs.
+ * @param pathUrl The operation path url.
+ * @param path The operation path.
+ * @returns
+ */
 export function buildPathOperationFunctionUrlLines(
   pathUrl: string,
   path: OpenApiSpecPath,
 ) {
   let block = `let url = props.baseUrl;\n`;
 
-  const pathUrlSegments = pathUrl.split("/");
+  const pathUrlSegments = pathUrl.split("/").filter((s) => s);
 
   for (const pathUrlSegment of pathUrlSegments) {
     if (pathUrlSegment.startsWith("{")) {
       const colonIndex = pathUrlSegment.lastIndexOf(":");
+
       if (colonIndex === -1) {
         // Path is regular /{id}
         const paramName = pathUrlSegment.slice(1, pathUrlSegment.length - 1);

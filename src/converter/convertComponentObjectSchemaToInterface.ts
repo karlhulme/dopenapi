@@ -10,7 +10,7 @@ export function convertComponentObjectSchemaToInterface(
   const iface: TypescriptTreeInterface = {
     name: schemaName,
     exported: true,
-    deprecated: schema.deprecated,
+    deprecated: Boolean(schema.deprecated),
     comment: buildComment(schema.title, schema.description),
     members: [],
   };
@@ -26,9 +26,9 @@ export function convertComponentObjectSchemaToInterface(
         name: propertyName,
         typeName: determineTypeNameForComponentSchemaProperty(property),
         comment: buildComment(property.title, property.description),
-        deprecated: property.deprecated,
+        deprecated: Boolean(property.deprecated),
         optional: !isRequired,
-        nullable: property.nullable,
+        nullable: Boolean(property.nullable),
       });
     }
   }

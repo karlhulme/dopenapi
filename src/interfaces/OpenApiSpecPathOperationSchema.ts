@@ -6,8 +6,24 @@ import { OpenApiSpecPathOperationSchemaItem } from "./OpenApiSpecPathOperationSc
  * in the schemas section, or array versions of the same.
  */
 export interface OpenApiSpecPathOperationSchema {
+  /**
+   * A reference to a type in the component schemas.
+   */
   $ref?: string;
+
+  /**
+   * The type of the schema.
+   */
   type?: "boolean" | "string" | "number" | "boolean" | "array";
+
+  /**
+   * A description of the schema.
+   */
   description?: string;
+
+  /**
+   * An object that describes the type of elements in an array.
+   * This is used if type=array.
+   */
   items?: OpenApiSpecPathOperationSchemaItem;
 }

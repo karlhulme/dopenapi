@@ -1,6 +1,5 @@
 import { TypescriptTreeInterface } from "../../deps.ts";
 import { OpenApiSpecComponentSchema } from "../interfaces/index.ts";
-import { buildComment } from "./buildComment.ts";
 import { determineTypeNameForComponentSchemaProperty } from "./determineTypeNameForComponentSchemaProperty.ts";
 
 /**
@@ -16,9 +15,12 @@ export function convertComponentObjectSchemaToInterface(
     name: schemaName,
     exported: true,
     deprecated: Boolean(schema.deprecated),
-    comment: buildComment(schema.title, schema.description),
     members: [],
   };
+
+  if (schema.description) {
+    iface.comment = schema.description;
+  }
 
   if (schema.properties) {
     for (const propertyName in schema.properties) {
@@ -30,11 +32,14 @@ export function convertComponentObjectSchemaToInterface(
       iface.members.push({
         name: propertyName,
         typeName: determineTypeNameForComponentSchemaProperty(property),
-        comment: buildComment(property.title, property.description),
         deprecated: Boolean(property.deprecated),
         optional: !isRequired,
         nullable: Boolean(property.nullable),
       });
+
+      if (property.description) {
+        iface.members[iface.members.length - 1].comment = property.description;
+      }
     }
   }
 

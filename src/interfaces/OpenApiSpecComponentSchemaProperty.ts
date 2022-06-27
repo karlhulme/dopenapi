@@ -8,7 +8,6 @@ import { OpenApiSpecComponentSchemaPropertyItem } from "./OpenApiSpecComponentSc
 export interface OpenApiSpecComponentSchemaProperty {
   $ref?: string;
   type?: "string" | "number" | "boolean" | "object" | "array";
-  title?: string;
   description?: string;
   deprecated?: boolean;
   nullable?: boolean;

@@ -6,11 +6,10 @@ Deno.test("Create an enum const array from a component string schema.", () => {
     type: "string",
     enum: ["foo", "bar"],
     description: "The description.",
-    title: "The title.",
   });
 
   assertEquals(enumConstArray, {
-    comment: "The description. (The title.)",
+    comment: "The description.",
     exported: true,
     name: "test",
     values: [
@@ -25,7 +24,6 @@ Deno.test("Fail to create an enum const array if the component string schema is 
     convertComponentStringSchemaToEnumConstArray("test", {
       type: "string",
       description: "The description.",
-      title: "The title.",
     })
   );
 });

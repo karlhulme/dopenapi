@@ -8,7 +8,6 @@ import { OpenApiSpecPathOperationSchemaItem } from "./OpenApiSpecPathOperationSc
 export interface OpenApiSpecPathOperationSchema {
   $ref?: string;
   type?: "boolean" | "string" | "number" | "boolean" | "array";
-  title?: string;
   description?: string;
   items?: OpenApiSpecPathOperationSchemaItem;
 }

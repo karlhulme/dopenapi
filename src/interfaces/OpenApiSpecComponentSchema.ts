@@ -6,7 +6,6 @@ import { OpenApiSpecComponentSchemaProperty } from "./OpenApiSpecComponentSchema
  */
 export interface OpenApiSpecComponentSchema {
   type: "object" | "string";
-  title?: string;
   enum?: string[];
   description?: string;
   deprecated?: boolean;

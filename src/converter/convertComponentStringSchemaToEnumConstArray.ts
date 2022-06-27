@@ -1,6 +1,5 @@
 import { TypescriptTreeEnumConstArray } from "../../deps.ts";
 import { OpenApiSpecComponentSchema } from "../interfaces/index.ts";
-import { buildComment } from "./buildComment.ts";
 
 /**
  * Returns an enum const array.
@@ -15,10 +14,15 @@ export function convertComponentStringSchemaToEnumConstArray(
     throw new Error(`Cannot read enum const array.\n${JSON.stringify(schema)}`);
   }
 
-  return {
+  const enumConstArray: TypescriptTreeEnumConstArray = {
     name: schemaName,
     exported: true,
     values: schema.enum,
-    comment: buildComment(schema.title, schema.description),
   };
+
+  if (schema.description) {
+    enumConstArray.comment = schema.description;
+  }
+
+  return enumConstArray;
 }

@@ -5,11 +5,9 @@ Deno.test("Create an interface from a component object schema.", () => {
   const iface = convertComponentObjectSchemaToInterface("test", {
     type: "object",
     description: "The description.",
-    title: "The title.",
     properties: {
       param1: {
         type: "string",
-        title: "param1 title",
         description: "param1 description",
         nullable: true,
       },
@@ -26,18 +24,17 @@ Deno.test("Create an interface from a component object schema.", () => {
 
   assertEquals(iface, {
     name: "test",
-    comment: "The description. (The title.)",
+    comment: "The description.",
     deprecated: false,
     exported: true,
     members: [{
-      comment: "param1 description (param1 title)",
+      comment: "param1 description",
       deprecated: false,
       name: "param1",
       nullable: true,
       optional: false,
       typeName: "string",
     }, {
-      comment: undefined,
       deprecated: true,
       name: "param2",
       nullable: false,

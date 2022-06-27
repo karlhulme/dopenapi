@@ -11,8 +11,44 @@ Deno.test("Convert an openapi specification object to a typescript tree.", () =>
     paths: {
       "/resource": {
         parameters: [],
+        delete: {
+          operationId: "doDelete",
+          summary: "Performs an action.",
+          tags: ["Test"],
+          parameters: [],
+          responses: {
+            "204": {
+              description: "Success.",
+            },
+          },
+          security: [],
+        },
+        get: {
+          operationId: "doGet",
+          summary: "Performs an action.",
+          tags: ["Test"],
+          parameters: [],
+          responses: {
+            "200": {
+              description: "Success.",
+            },
+          },
+          security: [],
+        },
+        patch: {
+          operationId: "doPatch",
+          summary: "Performs an action.",
+          tags: ["Test"],
+          parameters: [],
+          responses: {
+            "200": {
+              description: "Success.",
+            },
+          },
+          security: [],
+        },
         post: {
-          operationId: "doAction",
+          operationId: "doPost",
           summary: "Performs an action.",
           tags: ["Test"],
           parameters: [],
@@ -31,6 +67,18 @@ Deno.test("Convert an openapi specification object to a typescript tree.", () =>
               },
             },
           },
+        },
+        put: {
+          operationId: "doPut",
+          summary: "Performs an action.",
+          tags: ["Test"],
+          parameters: [],
+          responses: {
+            "200": {
+              description: "Success.",
+            },
+          },
+          security: [],
         },
       },
     },

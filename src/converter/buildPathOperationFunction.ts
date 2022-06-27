@@ -9,6 +9,13 @@ import { buildPathOperationFunctionResponseLines } from "./buildPathOperationFun
 import { buildPathOperationFunctionUrlLines } from "./buildPathOperationFunctionUrlLines.ts";
 import { buildPathOperationFunctionValidationLines } from "./buildPathOperationFunctionValidationLines.ts";
 
+/**
+ * Builds a typescript path operation function.
+ * @param pathUrl A url.
+ * @param path An OpenAPI spec path.
+ * @param method The HTTP verb method.
+ * @param op The OpenAPI operation.
+ */
 export function buildPathOperationFunction(
   pathUrl: string,
   path: OpenApiSpecPath,

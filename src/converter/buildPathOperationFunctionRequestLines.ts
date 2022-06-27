@@ -1,6 +1,12 @@
 import { OpenApiSpecPathOperation } from "../interfaces/index.ts";
 import { isOperationUsingApiKey } from "./isOperationUsingApiKey.ts";
 
+/**
+ * Returns a set of Typescript code for building
+ * the fetch request.
+ * @param method The HTTP verb.
+ * @param op An operation.
+ */
 export function buildPathOperationFunctionRequestLines(
   method: string,
   op: OpenApiSpecPathOperation,

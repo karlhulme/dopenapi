@@ -23,9 +23,9 @@ export function buildPathOperationFunctionResponseLines(
     block += `const resultBody = await response.json() as ${resultType};\n`;
   }
 
-  block += `const result: Partial<${
-    capitalizeFirstLetter(op.operationId)
-  }Result> = {\n`;
+  const returnType = capitalizeFirstLetter(op.operationId);
+
+  block += `const result: Partial<${returnType}Result> = {\n`;
 
   block += `status: response.status,\n`;
 
@@ -45,7 +45,7 @@ export function buildPathOperationFunctionResponseLines(
     }
   }
 
-  block += "return result;\n";
+  block += `return result as ${returnType}Result;\n`;
 
   return block;
 }

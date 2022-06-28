@@ -6,7 +6,8 @@ const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 function fixBlock(block: string) {
   return block
     .replace(": Partial<TestOpResult>", "")
-    .replace("as string", "");
+    .replace("as string", "")
+    .replace("as TestOpResult", "");
 }
 
 Deno.test("Generate response handling code.", async () => {

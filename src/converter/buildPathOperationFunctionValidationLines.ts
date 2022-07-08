@@ -11,10 +11,10 @@ export function buildPathOperationFunctionValidationLines(
   let block = "if (!response.ok) {\n";
 
   block += "if ([429, 503, 504].includes(response.status)) {\n";
-  block += "throw new ServiceCallTransitoryError(response.status)\n";
-  block += "} else {\n";
   block +=
-    "const statusLine = `Service call rejected with status code ${response.status}.`\n";
+    "throw new ServiceCallTransitoryError(response.status, await response.text())\n";
+  block += "} else {\n";
+
   block += "const errorTextLine = await response.text();\n";
   block += "const urlLine = `Url: ${url}`\n";
 
@@ -26,7 +26,7 @@ export function buildPathOperationFunctionValidationLines(
   }
 
   block +=
-    "throw new Error(`${statusLine}\n${errorTextLine}\n${urlLine}\n${bodyLine}`)\n";
+    "throw new ServiceCallRejectedError(response.status, `${errorTextLine}\n${urlLine}\n${bodyLine}`)\n";
 
   block += "}\n"; // End of else recognised status block.
 

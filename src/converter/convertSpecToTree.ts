@@ -25,10 +25,29 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
     name: "ServiceCallTransitoryError",
     comment: "Raised when a service call fails but may succeed if tried again.",
     exported: true,
-    superMessage: "`Service call failed for transitory reason: ${status}.`",
+    superMessage:
+      "`Service call failed for transitory reason: ${status} ${message}`",
     parameters: [{
       name: "status",
       typeName: "number",
+    }, {
+      name: "message",
+      typeName: "string",
+    }],
+  });
+
+  // Add error for rejection and network errors.
+  tree.errors.push({
+    name: "ServiceCallRejectedError",
+    comment: "Raised when a service call returns a non-success code.",
+    exported: true,
+    superMessage: "`Service call was rejected: ${status} ${message}`",
+    parameters: [{
+      name: "status",
+      typeName: "number",
+    }, {
+      name: "message",
+      typeName: "string",
     }],
   });
 

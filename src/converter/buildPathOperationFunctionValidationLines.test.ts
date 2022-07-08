@@ -2,8 +2,8 @@ import { assertRejects } from "../../deps.ts";
 import { buildPathOperationFunctionValidationLines } from "./buildPathOperationFunctionValidationLines.ts";
 
 class TempError extends Error {
-  constructor(public readonly status: number) {
-    super(`Status was ${status}.`);
+  constructor(readonly status: number, message: string) {
+    super(`TempError ${status} ${message}`);
     Object.setPrototypeOf(this, new.target.prototype);
     this.name = this.constructor.name;
   }
@@ -26,7 +26,6 @@ Deno.test("Generate a validation function that accepts a successful response.", 
     "url",
     "props",
     "response",
-    "ServiceCallTransitoryError",
     block,
   );
 
@@ -39,7 +38,7 @@ Deno.test("Generate a validation function that accepts a successful response.", 
   );
 });
 
-Deno.test("Generate a validation function that errors on an unsuccessful response.", async () => {
+Deno.test("Generate a validation function that errors on an unsuccessful response with no request body.", async () => {
   const block = buildPathOperationFunctionValidationLines(
     {
       operationId: "testOp",
@@ -55,6 +54,7 @@ Deno.test("Generate a validation function that errors on an unsuccessful respons
     "props",
     "response",
     "ServiceCallTransitoryError",
+    "ServiceCallRejectedError",
     block,
   );
 
@@ -71,9 +71,11 @@ Deno.test("Generate a validation function that errors on an unsuccessful respons
             return "Error Message.";
           },
         },
+        Error,
+        TempError,
       ),
-    Error,
-    "Service call rejected with status code 500.\nError Message.",
+    TempError,
+    "TempError 500 Error Message.\nUrl: http://localhost\n",
   );
 });
 
@@ -102,6 +104,7 @@ Deno.test("Generate a validation function that errors on an unsuccessful respons
     "props",
     "response",
     "ServiceCallTransitoryError",
+    "ServiceCallRejectedError",
     block,
   );
 
@@ -120,9 +123,11 @@ Deno.test("Generate a validation function that errors on an unsuccessful respons
             return "Error Message.";
           },
         },
+        Error,
+        TempError,
       ),
-    Error,
-    "body-content",
+    TempError,
+    'TempError 500 Error Message.\nUrl: http://localhost\nBody: {\n  "foo": "body-content"\n}',
   );
 });
 
@@ -142,6 +147,7 @@ Deno.test("Generate a validation function that yields a Transitory error on an t
     "props",
     "response",
     "ServiceCallTransitoryError",
+    "ServiceCallRejectedError",
     block,
   );
 
@@ -153,10 +159,15 @@ Deno.test("Generate a validation function that yields a Transitory error on an t
         {
           ok: false,
           status: 429,
+          // deno-lint-ignore require-await
+          text: async () => {
+            return "Rate limit.";
+          },
         },
         TempError,
+        Error,
       ),
     TempError,
-    "Status was 429.",
+    "TempError 429 Rate limit.",
   );
 });

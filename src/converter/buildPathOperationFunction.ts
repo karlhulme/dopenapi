@@ -9,7 +9,6 @@ import { buildPathOperationFunctionValidationLines } from "./buildPathOperationF
 /**
  * Builds a typescript path operation function.
  * @param pathUrl A url.
- * @param path An OpenAPI spec path.
  * @param method The HTTP verb method.
  * @param op The OpenAPI operation.
  */
@@ -52,7 +51,7 @@ export function buildPathOperationFunction(
   func.lines += "} catch (err) {\n";
   func.lines += "const e = err as Error;\n";
   func.lines +=
-    "throw new Error(`Service call failed to ${url}\n${e.name}: ${e.message}.`)\n";
+    "throw new ServiceCallTransitoryError(-1, `${e.name} ${e.message}`)\n";
   func.lines += "}\n";
 
   return func;

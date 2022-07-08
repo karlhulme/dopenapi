@@ -81,7 +81,6 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
       tree.functions.push(
         buildPathOperationFunction(
           pathUrl,
-          path,
           methodOp.method,
           methodOp.op,
         ),

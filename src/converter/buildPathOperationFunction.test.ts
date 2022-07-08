@@ -4,9 +4,6 @@ import { buildPathOperationFunction } from "./buildPathOperationFunction.ts";
 Deno.test("Generate typescript operation tree for fetch function.", () => {
   const op = buildPathOperationFunction(
     "http://localhost:1234",
-    {
-      parameters: [],
-    },
     "post",
     {
       operationId: "testOp",

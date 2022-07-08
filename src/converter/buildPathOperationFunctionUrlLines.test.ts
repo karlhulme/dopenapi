@@ -15,7 +15,11 @@ Deno.test("Generate a url function.", () => {
   const block = buildPathOperationFunctionUrlLines(
     "/test/path",
     {
+      operationId: "testOp",
       parameters: [],
+      responses: {},
+      security: [],
+      tags: [],
     },
   );
 
@@ -32,7 +36,11 @@ Deno.test("Generate a url function with a path parameter.", () => {
   const block = buildPathOperationFunctionUrlLines(
     "/test/path/{id}",
     {
+      operationId: "testOp",
       parameters: [],
+      responses: {},
+      security: [],
+      tags: [],
     },
   );
 
@@ -50,7 +58,11 @@ Deno.test("Generate a url function with a custom verb.", () => {
   const block = buildPathOperationFunctionUrlLines(
     "/test/path/{id}:extend",
     {
+      operationId: "testOp",
       parameters: [],
+      responses: {},
+      security: [],
+      tags: [],
     },
   );
 
@@ -68,6 +80,7 @@ Deno.test("Generate a url function with support for query params.", () => {
   const block = buildPathOperationFunctionUrlLines(
     "/test/path/{id}",
     {
+      operationId: "testOp",
       parameters: [{
         in: "query",
         name: "limit",
@@ -76,6 +89,9 @@ Deno.test("Generate a url function with support for query params.", () => {
           type: "number",
         },
       }],
+      responses: {},
+      security: [],
+      tags: [],
     },
   );
 

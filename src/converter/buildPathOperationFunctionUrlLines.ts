@@ -1,15 +1,15 @@
-import { OpenApiSpecPath } from "../interfaces/index.ts";
+import { OpenApiSpecPathOperation } from "../interfaces/index.ts";
 
 /**
  * Returns a set of Typescript code for building a url
  * based on the operation inputs.
  * @param pathUrl The operation path url.
  * @param path The operation path.
- * @returns
+ * @param op The OpenAPI operation.
  */
 export function buildPathOperationFunctionUrlLines(
   pathUrl: string,
-  path: OpenApiSpecPath,
+  op: OpenApiSpecPathOperation,
 ) {
   let block = `let url = props.baseUrl;\n`;
 
@@ -39,7 +39,7 @@ export function buildPathOperationFunctionUrlLines(
 
   block += "const queryParams: string[] = [];\n";
 
-  for (const queryParam of path.parameters) {
+  for (const queryParam of op.parameters) {
     if (queryParam.in === "query") {
       const queryAssignment =
         `"${queryParam.name}=" + props.${queryParam.name}.toString()`;

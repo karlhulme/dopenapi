@@ -1,8 +1,5 @@
 import { TypescriptTreeFunction } from "../../deps.ts";
-import {
-  OpenApiSpecPath,
-  OpenApiSpecPathOperation,
-} from "../interfaces/index.ts";
+import { OpenApiSpecPathOperation } from "../interfaces/index.ts";
 import { capitalizeFirstLetter } from "../utils/index.ts";
 import { buildPathOperationFunctionRequestLines } from "./buildPathOperationFunctionRequestLines.ts";
 import { buildPathOperationFunctionResponseLines } from "./buildPathOperationFunctionResponseLines.ts";
@@ -18,7 +15,6 @@ import { buildPathOperationFunctionValidationLines } from "./buildPathOperationF
  */
 export function buildPathOperationFunction(
   pathUrl: string,
-  path: OpenApiSpecPath,
   method: string,
   op: OpenApiSpecPathOperation,
 ): TypescriptTreeFunction {
@@ -47,7 +43,7 @@ export function buildPathOperationFunction(
     returnType: resultTypeName,
   };
 
-  func.lines += buildPathOperationFunctionUrlLines(pathUrl, path);
+  func.lines += buildPathOperationFunctionUrlLines(pathUrl, op);
 
   func.lines += "try {\n";
   func.lines += buildPathOperationFunctionRequestLines(method, op) + "\n";

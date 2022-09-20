@@ -82,7 +82,7 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
           name: schemaName,
           def: schema.items.$ref.substring(
             schema.items.$ref.lastIndexOf("/") + 1,
-          ),
+          ) + '[]',
         });
       } else {
         tree.types.push({

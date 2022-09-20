@@ -15,10 +15,10 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
   const tree = newTypescriptTree();
 
   // Prevent lint errors for auto-generated file.
-  tree.lintDirectives.banUnusedIgnore = true;
-  tree.lintDirectives.noEmptyInterface = true;
-  tree.lintDirectives.noExplicitAny = true;
-  tree.lintDirectives.noUnusedVars = true;
+  tree.lintDirectives.ignoreUnusedIgnore = true;
+  tree.lintDirectives.ignoreNoEmptyInterface = true;
+  tree.lintDirectives.ignoreNoExplicitAny = true;
+  tree.lintDirectives.ignoreNoUnusedVars = true;
 
   // Add error for transitory failures.
   tree.errors.push({
@@ -55,14 +55,53 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
   for (const schemaName in spec.components.schemas) {
     const schema = spec.components.schemas[schemaName];
 
-    if (schema.type === "object") {
-      tree.interfaces.push(
-        convertComponentObjectSchemaToInterface(schemaName, schema),
-      );
+    if (schema.type === "number") {
+      tree.types.push({
+        name: schemaName,
+        def: "number",
+      });
+    } else if (schema.type === "boolean") {
+      tree.types.push({
+        name: schemaName,
+        def: "boolean",
+      });
     } else if (schema.type === "string") {
-      tree.enumConstArrays.push(
-        convertComponentStringSchemaToEnumConstArray(schemaName, schema),
-      );
+      if (Array.isArray(schema.enum)) {
+        tree.enumConstArrays.push(
+          convertComponentStringSchemaToEnumConstArray(schemaName, schema),
+        );
+      } else {
+        tree.types.push({
+          name: schemaName,
+          def: "string",
+        });
+      }
+    } else if (schema.type === "array") {
+      if (schema.items && schema.items.$ref) {
+        tree.types.push({
+          name: schemaName,
+          def: schema.items.$ref.substring(
+            schema.items.$ref.lastIndexOf("/") + 1,
+          ),
+        });
+      } else {
+        tree.types.push({
+          name: schemaName,
+          def: "Record<string, unknown>[]",
+        });
+      }
+    } else {
+      // Handler for objects
+      if (schema.properties) {
+        tree.interfaces.push(
+          convertComponentObjectSchemaToInterface(schemaName, schema),
+        );
+      } else {
+        tree.types.push({
+          name: schemaName,
+          def: "Record<string, unknown>",
+        });
+      }
     }
   }
 

@@ -1,3 +1,4 @@
+import { OpenApiSpecComponentSchemaPropertyItem } from "https://raw.githubusercontent.com/karlhulme/dopenapi/main/mod.ts";
 import { OpenApiSpecComponentSchemaProperty } from "./OpenApiSpecComponentSchemaProperty.ts";
 
 /**
@@ -10,7 +11,7 @@ export interface OpenApiSpecComponentSchema {
   /**
    * The type of schema.
    */
-  type: "object" | "string";
+  type: "object" | "string" | "number" | "boolean" | "array";
 
   /**
    * An array of valid enum values.
@@ -36,4 +37,10 @@ export interface OpenApiSpecComponentSchema {
    * A list of the required fields.
    */
   required?: string[];
+
+  /**
+   * An object that describes the type of elements in an array.
+   * This is used if type=array.
+   */
+  items?: OpenApiSpecComponentSchemaPropertyItem;
 }

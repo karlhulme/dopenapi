@@ -16,30 +16,34 @@ by the Jsonotron library). The details are explained in this section.
 The `/components/requestBodies` will not be read. Place all schemas in the
 `/components/schemas` node instead.
 
-Parameter schemas, request bodies and response bodies must refer to a JSON type
-(e.g. number, string, boolean) or a $ref to another schema. Alternatively, you
-can define an 'array' type with the items property set to a JSON type or a $ref
-to another schema. The possible options are shown below. In many cases this will
-need to wrapped in a content > application/json > schema wrapper.
+Parameter schemas, request bodies and response bodies must refer to a JSON
+schema using a $ref parameter. Do not define the type inline.
+
+The schemas (in the components section) must be define a simple type (number,
+string, object) or an enum or an array that references another type. Anything
+else will be treated as a generic object or generic array.
 
 ```json
 {
   "simple": {
     "type": "number"
   },
-  "ref": {
-    "$ref": "#/components/schemas/SomeSchema"
+  "enum": {
+    "type": "string",
+    "enum": ["a", "b", "c"]
   },
   "simpleArray": {
     "type": "array",
     "items": {
-      "type": "string"
+      "$ref": "#/components/schemas/simple"
     }
   },
-  "refArray": {
-    "type": "array",
-    "items": {
-      "$ref": "#/components/schemas/SomeSchema"
+  "simpleObject": {
+    "type": "object",
+    "properties": {
+      "someProp": {
+        "$ref": "#/components/schemas/simple"
+      }
     }
   }
 }

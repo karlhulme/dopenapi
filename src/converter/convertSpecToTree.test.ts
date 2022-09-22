@@ -101,10 +101,7 @@ Deno.test("Convert an openapi specification object to a typescript tree.", () =>
           description: "The request body for the operation.",
           properties: {
             param1: {
-              type: "string",
-            },
-            param2: {
-              type: "number",
+              $ref: "SomeString",
             },
           },
         },

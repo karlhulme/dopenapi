@@ -7,7 +7,7 @@ Deno.test("Create an interface from a component object schema.", () => {
     description: "The description.",
     properties: {
       param1: {
-        type: "string",
+        $ref: "#/components/schemas/simple",
         description: "param1 description",
         nullable: true,
       },
@@ -26,7 +26,7 @@ Deno.test("Create an interface from a component object schema.", () => {
       name: "param1",
       nullable: true,
       optional: false,
-      typeName: "string",
+      typeName: "simple",
     }],
   });
 });

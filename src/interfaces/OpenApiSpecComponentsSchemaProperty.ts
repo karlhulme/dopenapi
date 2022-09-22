@@ -9,11 +9,6 @@ export interface OpenApiSpecComponentsSchemaProperty {
   $ref?: string;
 
   /**
-   * The type of property.
-   */
-  type?: "string" | "number" | "boolean" | "object";
-
-  /**
    * A description of the property.
    */
   description?: string;

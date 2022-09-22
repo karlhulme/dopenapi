@@ -29,14 +29,15 @@ paths:
               $ref: '#/components/schemas/SomeType'
 components:
   schemas:
+    SomeString:
+      type: string
     SomeType:
       type: object
       description: The request body for the operation.
       properties:
         param1:
-          type: string
-        param2:
-          type: number`;
+          $ref: '#/components/schemas/SomeString'
+`;
 
 Deno.test("Convert a specification to client code.", () => {
   convertSpecToClientCode(simpleService);

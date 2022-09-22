@@ -9,14 +9,6 @@ Deno.test("Determine a component schema type to be a reference.", () => {
   assertEquals(typeName, "SomeType");
 });
 
-Deno.test("Determine a component schema type to be a JSON type.", () => {
-  const typeName = determineTypeNameForComponentSchemaProperty({
-    type: "number",
-  });
-
-  assertEquals(typeName, "number");
-});
-
 Deno.test("Fail to find a component schema type if it's not valid.", () => {
   assertThrows(() => determineTypeNameForComponentSchemaProperty({}));
 });

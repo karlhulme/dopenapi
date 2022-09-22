@@ -1,5 +1,5 @@
-import { OpenApiSpecComponentSchemaPropertyItem } from "https://raw.githubusercontent.com/karlhulme/dopenapi/main/mod.ts";
-import { OpenApiSpecComponentSchemaProperty } from "./OpenApiSpecComponentSchemaProperty.ts";
+import { OpenApiSpecComponentsSchemaProperty } from "./OpenApiSpecComponentsSchemaProperty.ts";
+import { OpenApiSpecComponentsSchemaItems } from "./OpenApiSpecComponentsSchemaItems.ts";
 
 /**
  * Represents a schema that can be converted to either
@@ -7,7 +7,7 @@ import { OpenApiSpecComponentSchemaProperty } from "./OpenApiSpecComponentSchema
  * be either a record (object with 1 level of fields) or
  * an enum const array (string with enum values).
  */
-export interface OpenApiSpecComponentSchema {
+export interface OpenApiSpecComponentsSchema {
   /**
    * The type of schema.
    */
@@ -31,7 +31,7 @@ export interface OpenApiSpecComponentSchema {
   /**
    * A record of properties.
    */
-  properties?: Record<string, OpenApiSpecComponentSchemaProperty>;
+  properties?: Record<string, OpenApiSpecComponentsSchemaProperty>;
 
   /**
    * A list of the required fields.
@@ -42,5 +42,5 @@ export interface OpenApiSpecComponentSchema {
    * An object that describes the type of elements in an array.
    * This is used if type=array.
    */
-  items?: OpenApiSpecComponentSchemaPropertyItem;
+  items?: OpenApiSpecComponentsSchemaItems;
 }

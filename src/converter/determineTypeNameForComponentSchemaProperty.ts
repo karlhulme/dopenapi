@@ -1,22 +1,12 @@
-import { OpenApiSpecComponentSchemaProperty } from "../interfaces/index.ts";
+import { OpenApiSpecComponentsSchemaProperty } from "../interfaces/index.ts";
 
 export function determineTypeNameForComponentSchemaProperty(
-  property: OpenApiSpecComponentSchemaProperty,
+  property: OpenApiSpecComponentsSchemaProperty,
 ) {
-  if (
-    property.type === "array" && property.items &&
-    (property.items.$ref || property.items.type)
-  ) {
-    if (property.items.$ref) {
-      const lastDivider = property.items.$ref.lastIndexOf("/");
-      return property.items.$ref.substring(lastDivider + 1) + "[]";
-    } else {
-      return property.items.type + "[]";
-    }
-  } else if (property.$ref) {
+  if (property.$ref) {
     const lastDivider = property.$ref.lastIndexOf("/");
     return property.$ref.substring(lastDivider + 1);
-  } else if (property.type && property.type !== "array") {
+  } else if (property.type) {
     return property.type;
   } else {
     throw new Error(

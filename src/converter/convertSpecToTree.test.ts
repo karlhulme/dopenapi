@@ -84,7 +84,19 @@ Deno.test("Convert an openapi specification object to a typescript tree.", () =>
     },
     components: {
       schemas: {
-        SomeType: {
+        SomeNumber: {
+          type: "number",
+          description: "A number.",
+        },
+        SomeBoolean: {
+          type: "boolean",
+          description: "A boolean.",
+        },
+        SomeString: {
+          type: "string",
+          description: "A string.",
+        },
+        SomeObject: {
           type: "object",
           description: "The request body for the operation.",
           properties: {
@@ -96,6 +108,21 @@ Deno.test("Convert an openapi specification object to a typescript tree.", () =>
             },
           },
         },
+        SomeGenericObject: {
+          type: "object",
+          description: "A generic object.",
+        },
+        SomeArray: {
+          type: "array",
+          description: "An array.",
+          items: {
+            $ref: "string",
+          },
+        },
+        SomeGenericArray: {
+          type: "array",
+          description: "A generic array.",
+        },
         SomeEnum: {
           type: "string",
           enum: ["foo", "bar"],
@@ -106,7 +133,37 @@ Deno.test("Convert an openapi specification object to a typescript tree.", () =>
   });
 
   assertEquals(
-    Boolean(tree.interfaces.find((iface) => iface.name === "SomeType")),
+    Boolean(tree.types.find((t) => t.name === "SomeNumber")),
+    true,
+  );
+
+  assertEquals(
+    Boolean(tree.types.find((t) => t.name === "SomeBoolean")),
+    true,
+  );
+
+  assertEquals(
+    Boolean(tree.types.find((t) => t.name === "SomeString")),
+    true,
+  );
+
+  assertEquals(
+    Boolean(tree.interfaces.find((iface) => iface.name === "SomeObject")),
+    true,
+  );
+
+  assertEquals(
+    Boolean(tree.types.find((t) => t.name === "SomeGenericObject")),
+    true,
+  );
+
+  assertEquals(
+    Boolean(tree.types.find((t) => t.name === "SomeArray")),
+    true,
+  );
+
+  assertEquals(
+    Boolean(tree.types.find((t) => t.name === "SomeGenericArray")),
     true,
   );
 

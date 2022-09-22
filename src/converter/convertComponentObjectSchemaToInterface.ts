@@ -1,5 +1,5 @@
 import { TypescriptTreeInterface } from "../../deps.ts";
-import { OpenApiSpecComponentSchema } from "../interfaces/index.ts";
+import { OpenApiSpecComponentsSchema } from "../interfaces/index.ts";
 import { determineTypeNameForComponentSchemaProperty } from "./determineTypeNameForComponentSchemaProperty.ts";
 
 /**
@@ -9,7 +9,7 @@ import { determineTypeNameForComponentSchemaProperty } from "./determineTypeName
  */
 export function convertComponentObjectSchemaToInterface(
   schemaName: string,
-  schema: OpenApiSpecComponentSchema,
+  schema: OpenApiSpecComponentsSchema,
 ): TypescriptTreeInterface {
   const iface: TypescriptTreeInterface = {
     name: schemaName,

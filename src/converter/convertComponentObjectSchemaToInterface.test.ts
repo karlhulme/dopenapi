@@ -11,13 +11,6 @@ Deno.test("Create an interface from a component object schema.", () => {
         description: "param1 description",
         nullable: true,
       },
-      param2: {
-        type: "array",
-        items: {
-          $ref: "#/components/schemas/SomeType",
-        },
-        deprecated: true,
-      },
     },
     required: ["param1"],
   });
@@ -34,12 +27,6 @@ Deno.test("Create an interface from a component object schema.", () => {
       nullable: true,
       optional: false,
       typeName: "string",
-    }, {
-      deprecated: true,
-      name: "param2",
-      nullable: false,
-      optional: true,
-      typeName: "SomeType[]",
     }],
   });
 });

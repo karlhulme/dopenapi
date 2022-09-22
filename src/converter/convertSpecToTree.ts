@@ -58,11 +58,13 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
     if (schema.type === "number") {
       tree.types.push({
         name: schemaName,
+        comment: schema.description,
         def: "number",
       });
     } else if (schema.type === "boolean") {
       tree.types.push({
         name: schemaName,
+        comment: schema.description,
         def: "boolean",
       });
     } else if (schema.type === "string") {
@@ -73,6 +75,7 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
       } else {
         tree.types.push({
           name: schemaName,
+          comment: schema.description,
           def: "string",
         });
       }
@@ -80,6 +83,7 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
       if (schema.items && schema.items.$ref) {
         tree.types.push({
           name: schemaName,
+          comment: schema.description,
           def: schema.items.$ref.substring(
             schema.items.$ref.lastIndexOf("/") + 1,
           ) + "[]",
@@ -87,6 +91,7 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
       } else {
         tree.types.push({
           name: schemaName,
+          comment: schema.description,
           def: "Record<string, unknown>[]",
         });
       }
@@ -99,6 +104,7 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
       } else {
         tree.types.push({
           name: schemaName,
+          comment: schema.description,
           def: "Record<string, unknown>",
         });
       }

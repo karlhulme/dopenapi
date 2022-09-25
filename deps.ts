@@ -2,11 +2,11 @@ export {
   assertEquals,
   assertRejects,
   assertThrows,
-} from "https://deno.land/std@0.128.0/testing/asserts.ts";
+} from "https://deno.land/std@0.156.0/testing/asserts.ts";
 
 export {
   parse as parseYaml,
-} from "https://deno.land/std@0.128.0/encoding/yaml.ts";
+} from "https://deno.land/std@0.156.0/encoding/yaml.ts";
 
 export {
   generateTypescript,

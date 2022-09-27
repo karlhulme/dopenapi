@@ -1,4 +1,5 @@
 export {
+  convertRemoteSpecToClientCode,
   convertSpecToClientCode,
   convertSpecToTree,
 } from "./converter/index.ts";

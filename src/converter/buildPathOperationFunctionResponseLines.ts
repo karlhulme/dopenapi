@@ -6,14 +6,7 @@ import { capitalizeFirstLetter } from "../utils/index.ts";
 import { getOperationSuccessResponse } from "./getOperationSuccessResponse.ts";
 import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForOperationPathSchema.ts";
 import { buildPathOperationFunctionResponseHeaderParser } from "./buildPathOperationFunctionResponseHeaderParser.ts";
-
-/**
- * The list of headers that are processed by the browser
- * and should not be parsed manually.
- */
-const responseHeadersToIgnore = [
-  "set-cookie",
-];
+import { responseHeadersToIgnore } from "./headersToIgnore.ts";
 
 /**
  * Returns a set of Typescript code for building and

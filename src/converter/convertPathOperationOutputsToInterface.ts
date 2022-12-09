@@ -6,6 +6,7 @@ import {
 import { capitalizeFirstLetter } from "../utils/index.ts";
 import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForOperationPathSchema.ts";
 import { getOperationSuccessResponse } from "./getOperationSuccessResponse.ts";
+import { responseHeadersToIgnore } from "./headersToIgnore.ts";
 
 export function convertPathOperationOutputsToInterface(
   _path: OpenApiSpecPath,
@@ -39,15 +40,17 @@ export function convertPathOperationOutputsToInterface(
 
   if (response.headers) {
     for (const headerName in response.headers) {
-      const header = response.headers[headerName];
+      if (!responseHeadersToIgnore.includes(headerName)) {
+        const header = response.headers[headerName];
 
-      iface.members.push({
-        name: headerName,
-        typeName: determineTypeNameForOperationPathSchema(header.schema),
-        comment: header.description,
-        deprecated: Boolean(header.deprecated),
-        optional: !header.required,
-      });
+        iface.members.push({
+          name: headerName,
+          typeName: determineTypeNameForOperationPathSchema(header.schema),
+          comment: header.description,
+          deprecated: Boolean(header.deprecated),
+          optional: !header.required,
+        });
+      }
     }
   }
 

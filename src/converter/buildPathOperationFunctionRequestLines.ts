@@ -1,13 +1,6 @@
 import { OpenApiSpecPathOperation } from "../interfaces/index.ts";
+import { requestHeadersToIgnore } from "./headersToIgnore.ts";
 import { isOperationUsingApiKey } from "./isOperationUsingApiKey.ts";
-
-/**
- * The list of headers that are provided by the browser
- * and should not be provided manually.
- */
-const requestHeadersToIgnore = [
-  "user-agent",
-];
 
 /**
  * Returns a set of Typescript code for building
@@ -26,7 +19,7 @@ export function buildPathOperationFunctionRequestLines(
   block += `const headers: Record<string, string> = {};\n`;
 
   for (const param of op.parameters) {
-    if (param.in === "header" && !requestHeadersToIgnore.includes(param.in)) {
+    if (param.in === "header" && !requestHeadersToIgnore.includes(param.name)) {
       block += `if (typeof props["${param.name}"] !== "undefined") {\n`;
       block +=
         `headers["${param.name}"] = props["${param.name}"].toString();\n`;

@@ -5,6 +5,7 @@ import {
 } from "../interfaces/index.ts";
 import { capitalizeFirstLetter } from "../utils/index.ts";
 import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForOperationPathSchema.ts";
+import { requestHeadersToIgnore } from "./headersToIgnore.ts";
 import { isOperationUsingApiKey } from "./isOperationUsingApiKey.ts";
 
 /**
@@ -43,7 +44,10 @@ export function convertPathOperationInputsToInterface(
   }
 
   for (const param of op.parameters) {
-    if (param.in === "header" || param.in === "query") {
+    if (
+      (param.in === "header" && !requestHeadersToIgnore.includes(param.name)) ||
+      param.in === "query"
+    ) {
       iface.members.push({
         name: param.name,
         typeName: determineTypeNameForOperationPathSchema(param.schema),

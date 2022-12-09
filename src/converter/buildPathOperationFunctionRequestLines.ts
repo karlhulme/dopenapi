@@ -30,7 +30,7 @@ export function buildPathOperationFunctionRequestLines(
     block += `headers["x-api-key"] = props["x-api-key"];\n`;
   }
 
-  block += `const response = await fetch(url, {\n`;
+  block += `response = await fetch(url, {\n`;
   block += "...options,\n";
   block += `method: "${method}",\n`;
   block += "headers,\n";

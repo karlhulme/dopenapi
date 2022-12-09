@@ -6,7 +6,7 @@ const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 function fixBlock(block: string) {
   return block
     .replace(": Partial<TestOpResult>", "")
-    .replace("as string", "")
+    .replaceAll("as string", "")
     .replace("as TestOpResult", "");
 }
 
@@ -21,6 +21,9 @@ Deno.test("Generate response handling code.", async () => {
     },
     security: [],
     tags: [],
+  }, {
+    schemas: {},
+    securitySchemes: {},
   });
 
   const fn = new AsyncFunction(
@@ -58,6 +61,9 @@ Deno.test("Generate response handling code with a response body.", async () => {
     },
     security: [],
     tags: [],
+  }, {
+    schemas: {},
+    securitySchemes: {},
   });
 
   const fn = new AsyncFunction(
@@ -91,14 +97,14 @@ Deno.test("Generate response handling code with a response headers.", async () =
           "req-header": {
             description: "Required header",
             schema: {
-              type: "string",
+              $ref: "#/components/schemas/testString",
             },
             required: true,
           },
           "opt-header": {
             description: "Optional header",
             schema: {
-              type: "number",
+              $ref: "#/components/schemas/testString",
             },
             required: false,
           },
@@ -107,7 +113,14 @@ Deno.test("Generate response handling code with a response headers.", async () =
     },
     security: [],
     tags: [],
+  }, {
+    schemas: {
+      testString: { type: "string" },
+    },
+    securitySchemes: {},
   });
+
+  console.log(fixBlock(block));
 
   const fn = new AsyncFunction(
     "response",

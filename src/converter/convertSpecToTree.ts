@@ -147,6 +147,7 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
           pathUrl,
           methodOp.method,
           methodOp.op,
+          spec.components,
         ),
       );
     }

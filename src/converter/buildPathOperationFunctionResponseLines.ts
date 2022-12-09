@@ -1,4 +1,7 @@
-import { OpenApiSpecPathOperation } from "../interfaces/index.ts";
+import {
+  OpenApiSpecComponents,
+  OpenApiSpecPathOperation,
+} from "../interfaces/index.ts";
 import { capitalizeFirstLetter } from "../utils/index.ts";
 import { getOperationSuccessResponse } from "./getOperationSuccessResponse.ts";
 import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForOperationPathSchema.ts";
@@ -8,9 +11,11 @@ import { buildPathOperationFunctionResponseHeaderParser } from "./buildPathOpera
  * Returns a set of Typescript code for building and
  * returning the response from a service call.
  * @param op An operation.
+ * @param components The OpenAPI components.
  */
 export function buildPathOperationFunctionResponseLines(
   op: OpenApiSpecPathOperation,
+  components: OpenApiSpecComponents,
 ) {
   let block = "";
 
@@ -41,6 +46,7 @@ export function buildPathOperationFunctionResponseLines(
       block += buildPathOperationFunctionResponseHeaderParser(
         headerName,
         header,
+        components,
       ) + "\n";
     }
   }

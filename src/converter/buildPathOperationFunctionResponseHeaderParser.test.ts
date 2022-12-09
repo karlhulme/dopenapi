@@ -6,10 +6,18 @@ Deno.test("Build a response header parser for a required string.", () => {
     "test-header",
     {
       schema: {
-        type: "string",
+        $ref: "testString",
       },
       description: "The header.",
       required: true,
+    },
+    {
+      schemas: {
+        testString: {
+          type: "string",
+        },
+      },
+      securitySchemes: {},
     },
   );
 
@@ -24,9 +32,17 @@ Deno.test("Build a response header parser for an optional number.", () => {
     "test-header",
     {
       schema: {
-        type: "number",
+        $ref: "testNumber",
       },
       description: "The header.",
+    },
+    {
+      schemas: {
+        testNumber: {
+          type: "number",
+        },
+      },
+      securitySchemes: {},
     },
   );
 
@@ -43,16 +59,43 @@ Deno.test("Build a response header parser for a required boolean.", () => {
     "test-header",
     {
       schema: {
-        type: "boolean",
+        $ref: "testBoolean",
       },
       description: "The header.",
       required: true,
+    },
+    {
+      schemas: {
+        testBoolean: {
+          type: "boolean",
+        },
+      },
+      securitySchemes: {},
     },
   );
 
   assertEquals(
     block,
-    `result["test-header"] = response.headers.get("test-header") === "true";`,
+    `result["test-header"] = ["true", "TRUE", "1"].includes(response.headers.get("test-header"));`,
+  );
+});
+
+Deno.test("Fail to build a response header parser for an unknown type.", () => {
+  assertThrows(() =>
+    buildPathOperationFunctionResponseHeaderParser(
+      "test-header",
+      {
+        schema: {
+          $ref: "testUnknown",
+        },
+        description: "The header.",
+        required: true,
+      },
+      {
+        schemas: {},
+        securitySchemes: {},
+      },
+    )
   );
 });
 
@@ -62,10 +105,18 @@ Deno.test("Fail to build a response header parser for a non-JSON type.", () => {
       "test-header",
       {
         schema: {
-          $ref: "#/components/schemas/SomeType",
+          $ref: "testObj",
         },
         description: "The header.",
         required: true,
+      },
+      {
+        schemas: {
+          testObj: {
+            type: "object",
+          },
+        },
+        securitySchemes: {},
       },
     )
   );

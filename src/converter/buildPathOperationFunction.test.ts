@@ -16,6 +16,10 @@ Deno.test("Generate typescript operation tree for fetch function.", () => {
       security: [],
       tags: [],
     },
+    {
+      schemas: {},
+      securitySchemes: {},
+    },
   );
 
   op.lines = "";

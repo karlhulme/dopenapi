@@ -1,5 +1,8 @@
 import { TypescriptTreeFunction } from "../../deps.ts";
-import { OpenApiSpecPathOperation } from "../interfaces/index.ts";
+import {
+  OpenApiSpecComponents,
+  OpenApiSpecPathOperation,
+} from "../interfaces/index.ts";
 import { capitalizeFirstLetter } from "../utils/index.ts";
 import { buildPathOperationFunctionRequestLines } from "./buildPathOperationFunctionRequestLines.ts";
 import { buildPathOperationFunctionResponseLines } from "./buildPathOperationFunctionResponseLines.ts";
@@ -11,11 +14,13 @@ import { buildPathOperationFunctionValidationLines } from "./buildPathOperationF
  * @param pathUrl A url.
  * @param method The HTTP verb method.
  * @param op The OpenAPI operation.
+ * @param components The OpenAPI components.
  */
 export function buildPathOperationFunction(
   pathUrl: string,
   method: string,
   op: OpenApiSpecPathOperation,
+  components: OpenApiSpecComponents,
 ): TypescriptTreeFunction {
   const propsParamName = `${capitalizeFirstLetter(op.operationId)}Props`;
   const resultTypeName = `Promise<${
@@ -43,10 +48,9 @@ export function buildPathOperationFunction(
   };
 
   func.lines += buildPathOperationFunctionUrlLines(pathUrl, op);
-
   func.lines += buildPathOperationFunctionRequestLines(method, op) + "\n";
   func.lines += buildPathOperationFunctionValidationLines(op) + "\n";
-  func.lines += buildPathOperationFunctionResponseLines(op) + "\n";
+  func.lines += buildPathOperationFunctionResponseLines(op, components) + "\n";
 
   return func;
 }

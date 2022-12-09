@@ -5,7 +5,9 @@ const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 
 function fixBlock(block: string) {
   return block
-    .replace(": Record<string, string>", "");
+    .replace(": Record<string, string>", "")
+    .replace(": Response", "")
+    .replace(" as Error", "");
 }
 
 Deno.test("Generate request lines including headers and API key.", async () => {

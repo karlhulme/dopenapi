@@ -8,6 +8,14 @@ import { determineTypeNameForOperationPathSchema } from "./determineTypeNameForO
 import { buildPathOperationFunctionResponseHeaderParser } from "./buildPathOperationFunctionResponseHeaderParser.ts";
 
 /**
+ * The list of headers that are processed by the browser
+ * and should not be parsed manually.
+ */
+const responseHeadersToIgnore = [
+  "set-cookie",
+];
+
+/**
  * Returns a set of Typescript code for building and
  * returning the response from a service call.
  * @param op An operation.
@@ -42,12 +50,14 @@ export function buildPathOperationFunctionResponseLines(
 
   if (response.headers) {
     for (const headerName in response.headers) {
-      const header = response.headers[headerName];
-      block += buildPathOperationFunctionResponseHeaderParser(
-        headerName,
-        header,
-        components,
-      ) + "\n";
+      if (!responseHeadersToIgnore.includes(headerName)) {
+        const header = response.headers[headerName];
+        block += buildPathOperationFunctionResponseHeaderParser(
+          headerName,
+          header,
+          components,
+        ) + "\n";
+      }
     }
   }
 

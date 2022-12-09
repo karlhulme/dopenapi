@@ -42,7 +42,7 @@ export function buildPathOperationFunctionRequestLines(
   block += "} catch (err) {\n";
   block += "const e = err as Error;\n";
   block +=
-    "throw new ServiceCallTransitoryError(-1, `${e.name} ${e.message}`)\n";
+    "throw new ServiceCallTransitoryError(-1, `CONNECTION_FAILED ${e.name} ${e.message}`)\n";
   block += "}\n";
 
   return block;

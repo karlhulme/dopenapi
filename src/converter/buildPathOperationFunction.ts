@@ -44,15 +44,9 @@ export function buildPathOperationFunction(
 
   func.lines += buildPathOperationFunctionUrlLines(pathUrl, op);
 
-  func.lines += "try {\n";
   func.lines += buildPathOperationFunctionRequestLines(method, op) + "\n";
   func.lines += buildPathOperationFunctionValidationLines(op) + "\n";
   func.lines += buildPathOperationFunctionResponseLines(op) + "\n";
-  func.lines += "} catch (err) {\n";
-  func.lines += "const e = err as Error;\n";
-  func.lines +=
-    "throw new ServiceCallTransitoryError(-1, `${e.name} ${e.message}`)\n";
-  func.lines += "}\n";
 
   return func;
 }

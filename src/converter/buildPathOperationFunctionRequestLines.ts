@@ -11,7 +11,11 @@ export function buildPathOperationFunctionRequestLines(
   method: string,
   op: OpenApiSpecPathOperation,
 ) {
-  let block = `const headers: Record<string, string> = {};\n`;
+  let block = ``;
+
+  block += "let response: Response;\n";
+  block += "try {\n";
+  block += `const headers: Record<string, string> = {};\n`;
 
   for (const param of op.parameters) {
     if (param.in === "header") {
@@ -34,6 +38,12 @@ export function buildPathOperationFunctionRequestLines(
     block += "body: JSON.stringify(props.body),\n";
   }
   block += "});\n";
+
+  block += "} catch (err) {\n";
+  block += "const e = err as Error;\n";
+  block +=
+    "throw new ServiceCallTransitoryError(-1, `${e.name} ${e.message}`)\n";
+  block += "}\n";
 
   return block;
 }

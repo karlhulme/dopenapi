@@ -1,5 +1,6 @@
 {
   "tasks": {
-    "test": "rm -rf cov_profile && deno test --coverage=cov_profile && deno coverage cov_profile && deno fmt"
+    "test": "rm -rf cov_profile && deno test --coverage=cov_profile && deno coverage cov_profile && deno fmt",
+    "recache": "rm -f deno.lock && deno cache -r ./mod.ts"
   }
 }

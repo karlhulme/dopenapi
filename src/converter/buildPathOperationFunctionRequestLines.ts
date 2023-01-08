@@ -33,7 +33,7 @@ export function buildPathOperationFunctionRequestLines(
 
   block += `response = await fetch(url, {\n`;
   block += "...options,\n";
-  block += `method: "${method}",\n`;
+  block += `method: "${method.toUpperCase()}",\n`;
   block += "headers,\n";
   if (typeof op.requestBody !== "undefined") {
     block += "body: JSON.stringify(props.body),\n";

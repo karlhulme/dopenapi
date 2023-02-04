@@ -18,6 +18,8 @@ export function buildPathOperationFunctionRequestLines(
   block += "try {\n";
   block += `const headers: Record<string, string> = {};\n`;
 
+  block += `headers["content-type"] = "application/json";\n`;
+
   for (const param of op.parameters) {
     if (param.in === "header" && !requestHeadersToIgnore.includes(param.name)) {
       block += `if (typeof props["${param.name}"] !== "undefined") {\n`;
@@ -26,6 +28,7 @@ export function buildPathOperationFunctionRequestLines(
       block += "}\n";
     }
   }
+  ``;
 
   if (isOperationUsingApiKey(op)) {
     block += `headers["x-api-key"] = props["x-api-key"];\n`;

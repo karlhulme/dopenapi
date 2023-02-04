@@ -75,6 +75,7 @@ Deno.test("Generate request lines including headers and API key.", async () => {
       url: "http://localhost:1234",
       fetchOptions: {
         headers: {
+          "content-type": "application/json",
           "x-api-key": "secret",
           "x-test-header": "header1",
           "x-specified-optinal-header": "header2",
@@ -134,7 +135,9 @@ Deno.test("Generate request lines including request body.", async () => {
     {
       url: "http://localhost:1234",
       fetchOptions: {
-        headers: {},
+        headers: {
+          "content-type": "application/json",
+        },
         method: "POST",
         body: `{"foo":"bar"}`,
       },

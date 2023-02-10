@@ -27,6 +27,12 @@ Deno.test("Create an interface for an operation with no inputs.", () => {
       comment: "The base url for the service.",
       name: "baseUrl",
       typeName: "string",
+    }, {
+      comment:
+        "If true, the time taken to perform the fetch will be logged to the console.",
+      name: "logPerformance",
+      optional: true,
+      typeName: "boolean",
     }],
     name: "TestProps",
   });
@@ -56,6 +62,12 @@ Deno.test("Create an interface for an operation with path parameters.", () => {
       comment: "The base url for the service.",
       name: "baseUrl",
       typeName: "string",
+    }, {
+      comment:
+        "If true, the time taken to perform the fetch will be logged to the console.",
+      name: "logPerformance",
+      optional: true,
+      typeName: "boolean",
     }, {
       comment: "A description.",
       name: "id",
@@ -102,6 +114,12 @@ Deno.test("Create an interface for an operation with header and query parameters
       name: "baseUrl",
       typeName: "string",
     }, {
+      comment:
+        "If true, the time taken to perform the fetch will be logged to the console.",
+      name: "logPerformance",
+      optional: true,
+      typeName: "boolean",
+    }, {
       comment: "This is param-1.",
       name: "param-1",
       typeName: "string",
@@ -137,6 +155,12 @@ Deno.test("Create an interface for an operation that uses an API Key.", () => {
       name: "baseUrl",
       typeName: "string",
     }, {
+      comment:
+        "If true, the time taken to perform the fetch will be logged to the console.",
+      name: "logPerformance",
+      optional: true,
+      typeName: "boolean",
+    }, {
       comment: "The API key.",
       name: "x-api-key",
       optional: false,
@@ -170,6 +194,12 @@ Deno.test("Create an interface for an operation that uses a request body.", () =
       comment: "The base url for the service.",
       name: "baseUrl",
       typeName: "string",
+    }, {
+      comment:
+        "If true, the time taken to perform the fetch will be logged to the console.",
+      name: "logPerformance",
+      optional: true,
+      typeName: "boolean",
     }, {
       comment: "The body of the request.",
       name: "body",

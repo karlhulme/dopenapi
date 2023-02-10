@@ -28,6 +28,12 @@ export function convertPathOperationInputsToInterface(
       name: "baseUrl",
       typeName: "string",
       comment: "The base url for the service.",
+    }, {
+      name: "logPerformance",
+      typeName: "boolean",
+      optional: true,
+      comment:
+        "If true, the time taken to perform the fetch will be logged to the console.",
     }],
   };
 

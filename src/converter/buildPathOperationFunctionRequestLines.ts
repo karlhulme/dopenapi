@@ -15,6 +15,7 @@ export function buildPathOperationFunctionRequestLines(
   let block = ``;
 
   block += "let response: Response;\n";
+  block += "const start = performance.now();";
   block += "try {\n";
   block += `const headers: Record<string, string> = {};\n`;
 
@@ -47,6 +48,12 @@ export function buildPathOperationFunctionRequestLines(
   block += "const e = err as Error;\n";
   block +=
     "throw new ServiceCallTransitoryError(-1, `CONNECTION_FAILED -1 ${e.name} ${e.message}`)\n";
+  block += "} finally {\n";
+  block += "const duration = performance.now() - start;\n";
+  block += "if (props.logPerformance) {\n;";
+  block +=
+    "console.log(`${method.toUpperCase()} ${url} (${duration.toFixed(0)}ms)`)\n;";
+  block += "}\n";
   block += "}\n";
 
   return block;

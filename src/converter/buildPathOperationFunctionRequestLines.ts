@@ -51,7 +51,7 @@ export function buildPathOperationFunctionRequestLines(
   block += "} finally {\n";
   block += "const duration = performance.now() - start;\n";
   block += "if (props.logPerformance) {\n;";
-  block += "console.log(`" + method.toUpperCase() +
+  block += "console.log(`  " + method.toUpperCase() +
     " ${url} (${duration.toFixed(0)}ms)`)\n;";
   block += "}\n";
   block += "}\n";

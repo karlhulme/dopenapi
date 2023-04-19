@@ -11,11 +11,11 @@ export {
 export {
   generateTypescript,
   newTypescriptTree,
-} from "https://raw.githubusercontent.com/karlhulme/dtoasty/main/mod.ts";
+} from "https://raw.githubusercontent.com/karlhulme/dtoasty/v1.0.0/mod.ts";
 
 export type {
   TypescriptTree,
   TypescriptTreeEnumConstArray,
   TypescriptTreeFunction,
   TypescriptTreeInterface,
-} from "https://raw.githubusercontent.com/karlhulme/dtoasty/main/mod.ts";
+} from "https://raw.githubusercontent.com/karlhulme/dtoasty/v1.0.0/mod.ts";

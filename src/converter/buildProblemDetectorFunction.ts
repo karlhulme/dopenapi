@@ -12,7 +12,7 @@ export function buildProblemDetectorFunction(): TypescriptTreeFunction {
     exported: true,
     params: [{
       name: "response",
-      typeName: "Reponse",
+      typeName: "Response",
       comment: "A response from a service call.",
     }],
     lines: `

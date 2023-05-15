@@ -7,6 +7,7 @@ export function buildProblemParserFunction(): TypescriptTreeFunction {
   const func: TypescriptTreeFunction = {
     name: "parseIETF7087Problem",
     comment: "Parses an IETF 7087 problem.",
+    async: true,
     exported: true,
     params: [{
       name: "response",
@@ -36,7 +37,7 @@ export function buildProblemParserFunction(): TypescriptTreeFunction {
         )
       }
     `,
-    returnType: "ServiceCallProblemError",
+    returnType: "Promise<ServiceCallProblemError>",
   };
 
   return func;

@@ -53,7 +53,7 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
       typeName: "string",
     }, {
       name: "detail",
-      typeName: "number",
+      typeName: "string",
     }, {
       name: "properties",
       typeName: "Record<string, unknown>",

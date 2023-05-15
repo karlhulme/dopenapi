@@ -13,6 +13,9 @@ export function buildPathOperationFunctionValidationLines(
   block += "if ([429, 503, 504].includes(response.status)) {\n";
   block +=
     "throw new ServiceCallTransitoryError(response.status, await response.text())\n";
+
+  block += "} else if (isIETF7087Problem(response)) {\n";
+  block += "throw parseIETF7087Problem(response);\n";
   block += "} else {\n";
 
   block += "const errorTextLine = await response.text();\n";

@@ -36,10 +36,33 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
     }],
   });
 
-  // Add error for rejection and network errors.
+  // Add error for IETF 7087 problem errors.
+  tree.errors.push({
+    name: "ServiceCallProblemError",
+    comment:
+      "Raised when a service call returns a non-success code and IETF 7087 content.",
+    exported: true,
+    superMessage: "`Service call was rejected: ${code} ${type} ${detail}`",
+    parameters: [{
+      name: "code",
+      typeName: "number",
+    }, {
+      name: "type",
+      typeName: "string",
+    }, {
+      name: "detail",
+      typeName: "number",
+    }, {
+      name: "properties",
+      typeName: "Record<string, unknown>",
+    }],
+  });
+
+  // Add error for general rejection and network errors.
   tree.errors.push({
     name: "ServiceCallRejectedError",
-    comment: "Raised when a service call returns a non-success code.",
+    comment:
+      "Raised when a service call returns a non-success code and an unrecognised content.",
     exported: true,
     superMessage: "`Service call was rejected: ${status} ${message}`",
     parameters: [{

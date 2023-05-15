@@ -5,6 +5,8 @@ import { convertComponentStringSchemaToEnumConstArray } from "./convertComponent
 import { convertPathOperationInputsToInterface } from "./convertPathOperationInputsToInterface.ts";
 import { convertPathOperationOutputsToInterface } from "./convertPathOperationOutputsToInterface.ts";
 import { buildPathOperationFunction } from "./buildPathOperationFunction.ts";
+import { buildProblemDetectorFunction } from "./buildProblemDetectorFunction.ts";
+import { buildProblemParserFunction } from "./buildProblemParserFunction.ts";
 
 /**
  * Returns a string that contains Typescript declarations
@@ -73,6 +75,10 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
       typeName: "string",
     }],
   });
+
+  // Add functions used for problem detection and parsing
+  tree.functions.push(buildProblemDetectorFunction());
+  tree.functions.push(buildProblemParserFunction());
 
   // Generate interfaces for schemas.
   for (const schemaName in spec.components.schemas) {

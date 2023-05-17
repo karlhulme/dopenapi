@@ -44,12 +44,16 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
     comment:
       "Raised when a service call returns a non-success code and IETF 7087 content.",
     exported: true,
-    superMessage: "`Service call was rejected: ${code} ${type} ${detail}`",
+    superMessage:
+      "`Service call was rejected: ${code} ${type} ${title} ${detail}`",
     parameters: [{
       name: "code",
       typeName: "number",
     }, {
       name: "type",
+      typeName: "string",
+    }, {
+      name: "title",
       typeName: "string",
     }, {
       name: "detail",

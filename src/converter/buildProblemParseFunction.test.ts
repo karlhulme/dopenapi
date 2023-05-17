@@ -5,6 +5,7 @@ class TempError extends Error {
   constructor(
     readonly code: number,
     readonly type: string,
+    readonly title: string,
     readonly detail: string,
     readonly properties: Record<string, unknown>,
   ) {
@@ -29,7 +30,8 @@ Deno.test("The problem parser function can parse problem content.", async () => 
     new Response(
       JSON.stringify({
         status: 400,
-        type: "/common/errors/request-parameter-did-not-validate",
+        type: "/common/errors/requestParameterDidNotValidate",
+        title: "Url param failed validation.",
         detail: "Url param 'memberId' failed validation.",
         validationResult: [
           {
@@ -50,11 +52,13 @@ Deno.test("The problem parser function can parse problem content.", async () => 
     TempError,
   );
 
+  console.log(problemError);
   assertEquals(problemError.code, 400);
   assertEquals(
     problemError.type,
-    "/common/errors/request-parameter-did-not-validate",
+    "/common/errors/requestParameterDidNotValidate",
   );
+  assertEquals(problemError.title, "Url param failed validation.");
   assertEquals(problemError.detail, "Url param 'memberId' failed validation.");
   assertEquals(problemError.properties.validationResult[0].value, "nonsense");
 });

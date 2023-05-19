@@ -23,16 +23,13 @@ export function buildProblemParserFunction(): TypescriptTreeFunction {
           detail: problemDetail,
           ...problemProperties } = await response.json();
         
-        const problemHeaders = {};
-        response.headers.forEach((value, key) => problemHeaders[key] = value);
-
         return new ServiceCallProblemError(
           problemCode,
           problemType,
           problemTitle,
           problemDetail || "",
           problemProperties,
-          problemHeaders,
+          Object.fromEntries(response.headers),
         )
       } catch {
         return new ServiceCallProblemError(

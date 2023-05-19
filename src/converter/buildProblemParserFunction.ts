@@ -23,12 +23,16 @@ export function buildProblemParserFunction(): TypescriptTreeFunction {
           detail: problemDetail,
           ...problemProperties } = await response.json();
         
+        const problemHeaders = {};
+        response.headers.forEach((value, key) => problemHeaders[key] = value);
+
         return new ServiceCallProblemError(
           problemCode,
           problemType,
           problemTitle,
           problemDetail || "",
-          problemProperties
+          problemProperties,
+          problemHeaders,
         )
       } catch {
         return new ServiceCallProblemError(
@@ -36,6 +40,7 @@ export function buildProblemParserFunction(): TypescriptTreeFunction {
           "internal/unparseableProblem",
           "Response indicated a problem occurred but did not include JSON data describing it.",
           "",
+          {},
           {}
         )
       }

@@ -8,6 +8,7 @@ class TempError extends Error {
     readonly title: string,
     readonly detail: string,
     readonly properties: Record<string, unknown>,
+    readonly headers: Record<string, string | unknown>,
   ) {
     super(`TempError`);
     Object.setPrototypeOf(this, new.target.prototype);
@@ -52,7 +53,6 @@ Deno.test("The problem parser function can parse problem content.", async () => 
     TempError,
   );
 
-  console.log(problemError);
   assertEquals(problemError.code, 400);
   assertEquals(
     problemError.type,
@@ -61,4 +61,8 @@ Deno.test("The problem parser function can parse problem content.", async () => 
   assertEquals(problemError.title, "Url param failed validation.");
   assertEquals(problemError.detail, "Url param 'memberId' failed validation.");
   assertEquals(problemError.properties.validationResult[0].value, "nonsense");
+  assertEquals(
+    problemError.headers["content-type"],
+    "application/problem+json;charset=utf-8",
+  );
 });

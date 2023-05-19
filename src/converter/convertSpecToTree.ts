@@ -61,6 +61,9 @@ export function convertSpecToTree(spec: OpenApiSpec): TypescriptTree {
     }, {
       name: "properties",
       typeName: "Record<string, unknown>",
+    }, {
+      name: "headers",
+      typeName: "Record<string, string|undefined>",
     }],
   });
 

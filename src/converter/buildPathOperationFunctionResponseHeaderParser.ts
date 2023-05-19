@@ -47,24 +47,32 @@ function buildResponseHeaderExtracter(
 ) {
   const typeName = determineTypeNameForComponentSchemaProperty(schema);
 
-  const comp = components.schemas[typeName];
+  let resolvedType = typeName;
 
-  if (!comp) {
-    throw new Error(
-      `Unsupported header ${headerName}.\nUnknown component ${comp}.`,
-    );
+  if (!["number", "string", "boolean"].includes(resolvedType)) {
+    const comp = components.schemas[typeName];
+
+    if (!comp) {
+      throw new Error(
+        `Unable to find component referenced by header ${headerName}.\n${
+          JSON.stringify(schema)
+        }`,
+      );
+    }
+
+    resolvedType = comp.type;
   }
 
-  if (comp.type === "boolean") {
+  if (resolvedType === "boolean") {
     return `["true", "TRUE", "1"].includes(response.headers.get("${headerName}"))`;
-  } else if (comp.type === "number") {
+  } else if (resolvedType === "number") {
     return `parseFloat(response.headers.get("${headerName}"))`;
-  } else if (comp.type === "string") {
+  } else if (resolvedType === "string") {
     return `response.headers.get("${headerName}") as string`;
   } else {
     throw new Error(
-      `Unsupported header ${headerName}.\nUnsupported component ${
-        JSON.stringify(comp)
+      `Unable to resolve type for header ${headerName}.\n${
+        JSON.stringify(schema)
       }`,
     );
   }

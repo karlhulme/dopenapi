@@ -14,7 +14,7 @@ export interface OpenApiSpecPathOperationSchema {
   /**
    * The type of the schema.
    */
-  type?: "boolean" | "string" | "number" | "boolean" | "array";
+  type?: "boolean" | "string" | "number" | "array";
 
   /**
    * A description of the schema.

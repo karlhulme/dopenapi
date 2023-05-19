@@ -9,6 +9,18 @@ export interface OpenApiSpecComponentsSchemaProperty {
   $ref?: string;
 
   /**
+   * A JSON scalar type.
+   */
+  type?: "number" | "string" | "boolean" | "array";
+
+  /**
+   * An array of references, whereby only one element should be supplied.
+   * This exists to workaround the limitation that descriptions placed
+   * alongside $ref's are ignored.
+   */
+  allOf?: { $ref: string }[];
+
+  /**
    * A description of the property.
    */
   description?: string;

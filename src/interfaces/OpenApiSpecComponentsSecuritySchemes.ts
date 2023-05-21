@@ -15,4 +15,10 @@ export interface OpenApiSpecComponentsSecuritySchemes {
    * uses an API key in the header for security.
    */
   apiKeyAuth?: OpenApiSpecComponentsSecuritySchemesApiKey;
+
+  /**
+   * If populated, the presence of this key indicates the service
+   * uses a token in a cookie for security.
+   */
+  cookieAuth?: OpenApiSpecComponentsSecuritySchemesApiKey;
 }

@@ -8,9 +8,9 @@ export interface OpenApiSpecComponentsSecuritySchemesApiKey {
   type: "apiKey";
 
   /**
-   * The placement of the security key. Only header is supported.
+   * The placement of the security key. Only header and cookie are supported.
    */
-  in: "header";
+  in: "header" | "cookie";
 
   /**
    * The name of the header used to store the API key.

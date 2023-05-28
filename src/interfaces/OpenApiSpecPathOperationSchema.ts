@@ -17,6 +17,11 @@ export interface OpenApiSpecPathOperationSchema {
   type?: "boolean" | "string" | "number" | "array";
 
   /**
+   * An example value.
+   */
+  example?: boolean | string | number | unknown;
+
+  /**
    * A description of the schema.
    */
   description?: string;
